@@ -6,8 +6,6 @@
 --- AUTHOR: bluesnipersguy, colonthreeing, Egg (illudethis)
 ----------------------------------------------------------
 ----------- MOD CODE -------------------------------------
-_RELEASE_MODE = false
-
 if not SnipersTV then
 	SnipersTV = {}
 end
