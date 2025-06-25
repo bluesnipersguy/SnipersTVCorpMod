@@ -1,0 +1,21 @@
+{
+	"folders": [
+		{
+			"name": "SnipersTVCorpMod",
+			"path": "../SnipersTVCorporation/SnipersTVCorpMod"
+		},
+		{
+			"name": "assets",
+			"path": "../SnipersTVCorporation/assets"
+		},
+		{
+			"name": "items",
+			"path": "../SnipersTVCorporation/items"
+		},
+		{
+			"name": "lovely",
+			"path": "../SnipersTVCorporation/lovely"
+		}
+	],
+	"settings": {}
+}
