@@ -1,0 +1,17 @@
+{
+	"id": "SnipersTV",
+	"name": "Snipers TV Corp. Mod",
+	"display_name": "Snipers TV Corp. Mod",
+	"author": ["bluesnipersguy, Egg (illudethis), colonthreeing"],
+	"description": "A custom mod made with gimicks that no one ever thought would come to fruition.",
+	"prefix": "SnipersTV",
+	"main_file": "main.lua",
+	"priority": 0,
+	"badge_colour": "6abe30",
+	"badge_text_colour": "FFFFFF",
+	"version": "0.10",
+	"dependencies": [
+		"Lovely (>=0.7)",
+		"Balatro (>=1.0.1o)"
+	]
+}
