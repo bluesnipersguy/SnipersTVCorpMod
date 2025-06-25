@@ -157,15 +157,8 @@ SMODS.Joker{
     pos = {x=0, y= 0},
     soul_pos = { x = 0, y = 1 },
     config = { extra = { DarkXMult = 1.5, } },
-       loc_vars = function(self, info_queue, center)
-        local card = info_queue and info_queue.card or nil
-        local mult = 1.5
-
-        if card and card.ability and card.ability.extra then
-            mult = card.ability.extra.DarkXMult or 1.5
-        end
-
-        return { vars = { mult } }
+    loc_vars = function(self, info_queue, card)
+        return { vars = { card.ability.extra.DarkXMult } }
     end,
     cost = 30,
     rarity = 4,
