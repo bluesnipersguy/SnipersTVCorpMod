@@ -25,26 +25,47 @@ SMODS.Joker{
     eternal_compat = true,
     perishable_compat = true,
     atlas = 'ForestJoker',
-    config = {extra = {ForestRetriggers = 0,}},
+    config = { extra = { ForestRetriggers = 0, } },
     loc_vars = function(self, info_queue, center)
         return { vars = {center.ability.extra.ForestRetriggers} }
     end,
     check_for_unlock = function(self)
         unlock_card(self)
     end,
-    calculate = function(self, card, context)
-        if context.retrigger_joker_check and not context.retrigger_joker and context.other_card ~= self then
-            local count = 0
-            for _, j in ipairs(G.jokers.cards) do
-                local name = j.ability and j.ability.name
-                if name == "Blueprint" or name == "Brainstorm" then
-                    count = count + 1
-                end
+    add_to_deck = function (self, card, from_debuff)
+        self:calculate_retrigs(card)
+    end,
+    calculate_retrigs = function(self, card)
+        local count = 0
+        for _, j in ipairs(G.jokers.cards) do
+            local name = j.ability and j.ability.name
+            if name == "Blueprint" or name == "Brainstorm" then
+                print("BP or BS found!!")
+                count = count + 1
             end
-            card.ability.extra.ForestRetriggers = count
+        end
+        card.ability.extra.ForestRetriggers = count
+    end,
+    calculate = function(self, card, context)
+        if context.retrigger_joker_check and not context.retrigger_joker then
+            local name = context.other_card.ability and context.other_card.ability.name
+            if name == "Blueprint" or name == "Brainstorm" then
+                return {
+                    repetitions = card.ability.extra.ForestRetriggers,
+                    message = "There ya go! :3c"
+                }
+            end
+        end
+        if context.card_added then
+            card.ability.extra.ForestRetriggers = card.ability.extra.ForestRetriggers + 1
             return {
-                repetitions = count,
-                message = "There ya go! :3c"
+                message = "Welcome :3c"
+            }
+        end
+        if context.selling_card then
+            card.ability.extra.ForestRetriggers = card.ability.extra.ForestRetriggers - 1
+            return {
+                message = "Rest in peace 3:"
             }
         end
     end,
@@ -190,7 +211,6 @@ SMODS.Joker{
                 xmult = card.ability.extra.DarkXMult,
             }
         end
-
     end,
 }
 SMODS.Joker{
@@ -242,3 +262,43 @@ For each selected blind, gain X0.5mult and increse gain by 2 dollars.
 Starts out at 1X and 2 dollars.
 Obscures all vital information until sold.
 ]]
+
+SMODS.Rarity:take_ownership("Common", {
+    key = "Common",
+    loc_txt = {},
+    default_weight = 0.0,
+    badge_colour = HEX('009dff'),
+    get_weight = function(self, weight, object_type)
+        return weight
+    end,
+})
+
+SMODS.Rarity:take_ownership("Uncommon", {
+    key = "Uncommon",
+    loc_txt = {},
+    default_weight = 0.0,
+    badge_colour = HEX("4BC292"),
+    get_weight = function(self, weight, object_type)
+        return weight
+    end,
+})
+
+SMODS.Rarity:take_ownership("Rare", {
+    key = "Rare",
+    loc_txt = {},
+    default_weight = 1.00,
+    badge_colour = HEX('fe5f55'),
+    get_weight = function(self, weight, object_type)
+        return weight
+    end,
+})
+
+SMODS.Rarity:take_ownership("Legendary", {
+    key = "Legendary",
+    loc_txt = {},
+    default_weight = 0.0,
+    badge_colour = HEX("b26cbb"),
+    get_weight = function(self, weight, object_type)
+       return weight
+    end,
+})
