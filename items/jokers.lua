@@ -313,9 +313,7 @@ SMODS.Rarity:take_ownership("Legendary", {
     default_weight = 0.0,
     badge_colour = HEX("b26cbb"),
     get_weight = function(self, weight, object_type)
-        print("Rarity for Legendary being calculated...")
         if #find_joker('j_SnipersTV_Egg') > 0 then
-            print("Egg found!!")
             return 0.05
         end
        return weight
