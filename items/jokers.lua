@@ -40,7 +40,6 @@ SMODS.Joker{
         for _, j in ipairs(G.jokers.cards) do
             local name = j.ability and j.ability.name
             if name == "Blueprint" or name == "Brainstorm" then
-                print("BP or BS found!!")
                 count = count + 1
             end
         end
@@ -57,16 +56,22 @@ SMODS.Joker{
             end
         end
         if context.card_added then
-            card.ability.extra.ForestRetriggers = card.ability.extra.ForestRetriggers + 1
-            return {
-                message = "Welcome :3c"
-            }
+            local name = context.card.ability and context.card.ability.name
+            if name == "Blueprint" or name == "Brainstorm" then
+                card.ability.extra.ForestRetriggers = card.ability.extra.ForestRetriggers + 1
+                return {
+                    message = "Welcome :3c"
+                }
+            end
         end
         if context.selling_card then
-            card.ability.extra.ForestRetriggers = card.ability.extra.ForestRetriggers - 1
-            return {
-                message = "Rest in peace 3:"
-            }
+            local name = context.card.ability and context.card.ability.name
+            if name == "Blueprint" or name == "Brainstorm" then
+                card.ability.extra.ForestRetriggers = card.ability.extra.ForestRetriggers - 1
+                return {
+                    message = "Rest in peace 3:"
+                }
+            end
         end
     end,
 }
@@ -266,9 +271,12 @@ Obscures all vital information until sold.
 SMODS.Rarity:take_ownership("Common", {
     key = "Common",
     loc_txt = {},
-    default_weight = 0.0,
+    default_weight = 0.7,
     badge_colour = HEX('009dff'),
     get_weight = function(self, weight, object_type)
+        if #find_joker('j_SnipersTV_Egg') > 0 then
+            return 0.55
+        end
         return weight
     end,
 })
@@ -276,9 +284,12 @@ SMODS.Rarity:take_ownership("Common", {
 SMODS.Rarity:take_ownership("Uncommon", {
     key = "Uncommon",
     loc_txt = {},
-    default_weight = 0.0,
+    default_weight = 0.25,
     badge_colour = HEX("4BC292"),
     get_weight = function(self, weight, object_type)
+        if #find_joker('j_SnipersTV_Egg') > 0 then
+            return 0.15
+        end
         return weight
     end,
 })
@@ -286,9 +297,12 @@ SMODS.Rarity:take_ownership("Uncommon", {
 SMODS.Rarity:take_ownership("Rare", {
     key = "Rare",
     loc_txt = {},
-    default_weight = 1.00,
+    default_weight = 0.05,
     badge_colour = HEX('fe5f55'),
     get_weight = function(self, weight, object_type)
+        if #find_joker('j_SnipersTV_Egg') > 0 then
+            return 0.25
+        end
         return weight
     end,
 })
@@ -299,6 +313,11 @@ SMODS.Rarity:take_ownership("Legendary", {
     default_weight = 0.0,
     badge_colour = HEX("b26cbb"),
     get_weight = function(self, weight, object_type)
+        print("Rarity for Legendary being calculated...")
+        if #find_joker('j_SnipersTV_Egg') > 0 then
+            print("Egg found!!")
+            return 0.05
+        end
        return weight
     end,
 })
