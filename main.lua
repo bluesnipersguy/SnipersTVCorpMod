@@ -23,7 +23,9 @@ for _, file in ipairs(files) do
 	if err then
 		error(err) 
 	end
-	f()
+	if f then
+		f()
+	end
 end
 SMODS.ObjectType({
 	key = 'SnipersTVAddition',
