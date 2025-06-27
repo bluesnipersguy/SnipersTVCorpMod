@@ -261,8 +261,8 @@ SMODS.Joker{
 SMODS.Atlas{
     key = 'Landscape',
     path = 'Landscape.png',
-    px = 140,
-    py = 65,
+    px = 71,
+    py = 95,
 }
 
 SMODS.Joker{
