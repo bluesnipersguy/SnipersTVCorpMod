@@ -218,6 +218,12 @@ SMODS.Joker{
         end
     end,
 }
+SMODS.Atlas{
+    key = 'EggJoker',
+    path = 'EggJoker.png',
+    px = 69,
+    py = 96,
+}
 SMODS.Joker{
     key = 'Egg',
     loc_txt= {
@@ -241,33 +247,6 @@ SMODS.Joker{
         unlock_card(self)
     end,
 }
---[[
-Landscape
-Rarity: Rare
-Joker starts at x1 mult, every face card played will add 0.5 mult to joker, 
-Every non face card played subtracts 0.5 mult. 
-Every face card discarded permanently adds 20 chips to card.
-Retrigger both once if both are held.
-(Credit to Masked Man)
-]]
---[[
-Yummer
-Rarity: Legendary
-Uprades EVERY card in deck
-Copies it for next 3 rounds,
-After the first 3 rounds,
-It give 1.5 mult,
-gets destroyed after 15 hands.
-(Credit to Masked Man)
-]]
---[[
-[CLASSIFIED]
-Rarity: Rare
-For each selected blind, gain X0.5mult and increse gain by 2 dollars.
-Starts out at 1X and 2 dollars.
-Obscures all vital information until sold.
-]]
-
 SMODS.Rarity:take_ownership("Common", {
     key = "Common",
     loc_txt = {},
@@ -319,3 +298,29 @@ SMODS.Rarity:take_ownership("Legendary", {
        return weight
     end,
 })
+--[[
+Landscape
+Rarity: Rare
+Joker starts at x1 mult, every face card played will add 0.5 mult to joker, 
+Every non face card played subtracts 0.5 mult. 
+Every face card discarded permanently adds 20 chips to card.
+Retrigger both once if both are held.
+(Credit to Masked Man)
+]]
+--[[
+Yummer
+Rarity: Legendary
+Uprades EVERY card in deck
+Copies it for next 3 rounds,
+After the first 3 rounds,
+It give 1.5 mult,
+gets destroyed after 15 hands.
+(Credit to Masked Man)
+]]
+--[[
+[CLASSIFIED]
+Rarity: Rare
+For each selected blind, gain X0.5mult and increse gain by 2 dollars.
+Starts out at 1X and 2 dollars.
+Obscures all vital information until sold.
+]]
