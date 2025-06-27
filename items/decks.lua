@@ -17,7 +17,7 @@ SMODS.Back({
         }
     },
 
-    config = { hands = 0, discards = 0, jokerspace = 1},
+    config = { hands = 0, discards = 0, joker_slot = 1},
     atlas = 'ForestDeck',
     pos = { x = 0, y = 0 },
     order = 1,
@@ -31,7 +31,7 @@ SMODS.Back({
                         set = 'Joker',
                         key = 'j_SnipersTV_ForestJoker',
                         edition = 'e_negative',
-                        sticker = 's_eternal',
+                        sticker = 'eternal',
                         area = G.jokers
                     }
                     card:add_to_deck()
@@ -59,13 +59,14 @@ SMODS.Atlas{
     px = 69,
     py = 93,
 }
+
 SMODS.Back({
     key = "DarkDeck",
     loc_txt = {
         name = "Gentleman Deck",
         text = {
             "Start with a",
-            "{C:legendary} Legendary{} {C:red} Harold{} Joker"
+            "{C:legendary} Legendary{} {C:red}Harold{} Joker"
         },
     },
 
@@ -91,27 +92,40 @@ SMODS.Back({
             end,
         }))
     end,
+})   
+SMODS.Back({
+    key = "HoarderDeck",
+    loc_txt = {
+        name = "Hoarders Deck",
+        text = {
+            "A combination of:",
+            "{C:red}Red{} Deck, {C:blue}Blue{} Deck, {C:attention}Yellow{} Deck,",
+            "{C:green}Green{} Deck, and Black Deck.",
+            "{C:blue}+1{} Hand, {C:red}+1{} Discard, {C:attention}+1{} Joker Slot.",
+            "Start with {C:attention}10{} Dollars.",
+            "Earn {C:attention}2{} dollars per {C:blue}hand{} left.",
+            "Earn {C:attention}1{} dollar per {C:blue}discard{} left."
+        },
+    },
 
+    config = { hands = 1, discards = 1, dollars = 10, extra_hand_bonus = 2, extra_discard_bonus = 1, joker_slot = 1},
+    pos = { x = 0, y = 0 },
+    order = 1,
+    unlocked = true,
     check_for_unlock = function(self, args)
         unlock_card(self)
     end,
 })
---[[
+--[[ 
 NEXT DECK!
-Hoarders Deck!
-A Combination of Red, Black, Blue, Green, and Yellow Deck.
-Benefits:
-+1 hand
-+1 Discard
-Start with 10$
-1 extra Joker Slot
-2 Dollars per left hand
-1 dollar per left discard.
-]]
---[[
-NEXT NEXT DECK!
 Bonkers Deck!
 A Combination of Magic, Nebula, Zodiac, Ghost, Anaglyph, Abandonded, Erratic, and Plasma.
 Benefits:
 too long to write rn
+]]
+--[[
+NEXT NEXT DECK!
+Moneymaxxing Deck!
+Start with 1 Goated Temperance
+and A negative Gift Card.
 ]]

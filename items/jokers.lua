@@ -221,13 +221,13 @@ SMODS.Joker{
 SMODS.Atlas{
     key = 'EggJoker',
     path = 'EggJoker.png',
-    px = 69,
+    px = 71,
     py = 96,
 }
 SMODS.Joker{
     key = 'Egg',
     loc_txt= {
-        name = 'Egg',
+        name = 'Egg (illudethis)',
         text = { '{C:red}Rare{} Jokers are much more common in shop.',
                 '{C:legendary}Legendary{} jokers can also appear in shop as well.',
                 '{C:inactive}These damn script kiddies. - blue',
@@ -237,7 +237,7 @@ SMODS.Joker{
     pos = {x=0, y= 0},
     soul_pos = { x = 0, y = 1 },
     atlas = 'EggJoker',
-    cost = 35,
+    cost = 12,
     rarity = 3,
     unlocked = true,
     discovered = true,
@@ -324,4 +324,10 @@ Rarity: Rare
 For each selected blind, gain X0.5mult and increse gain by 2 dollars.
 Starts out at 1X and 2 dollars.
 Obscures all vital information until sold.
+]]
+--[[
+Goated Temperance
+For each dollar in all combined Joker sell value.
+This Joker gains X1.1 mult.
+(Excluding Egg)
 ]]
