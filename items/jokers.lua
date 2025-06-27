@@ -270,7 +270,7 @@ SMODS.Joker{
     loc_txt= {
         name = 'Landscape',
         text = { 'Debug.{X:mult,C:white}X#1# ',
-                'Debug. {C:blue}X2#2',
+                'Debug. {C:blue}#2#',
                 '{C:inactive}add a proper descrption here please...',
             }
     },
