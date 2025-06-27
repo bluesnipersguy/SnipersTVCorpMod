@@ -17,7 +17,7 @@ SMODS.Back({
         }
     },
 
-    config = { hands = 0, discards = 0, joker_slot = 1},
+    config = {joker_slot = 1},
     atlas = 'ForestDeck',
     pos = { x = 0, y = 0 },
     order = 1,
@@ -69,8 +69,6 @@ SMODS.Back({
             "{C:legendary} Legendary{} {C:red}Harold{} Joker"
         },
     },
-
-    config = { hands = 0, discards = 0,},
     atlas = 'DarkDeck',
     pos = { x = 0, y = 0 },
     order = 1,
@@ -83,6 +81,36 @@ SMODS.Back({
                     local card = SMODS.create_card{
                         set = 'Joker',
                         key = 'j_SnipersTV_DarkJoker',
+                        area = G.jokers
+                    }
+                    card:add_to_deck()
+                    G.jokers:emplace(card)
+                    return true
+                end
+            end,
+        }))
+    end,
+})   
+SMODS.Back({
+    key = "EggDeck",
+    loc_txt = {
+        name = "RNGJesus Deck",
+        text = {
+            "Start with a",
+            "{C:rare} Rare{} {C:red}Egg (illudethis){} Joker"
+        },
+    },
+    pos = { x = 0, y = 0 },
+    order = 1,
+    unlocked = true,
+
+    apply = function(self)
+        G.E_MANAGER:add_event(Event({
+            func = function()
+                if G.jokers then
+                    local card = SMODS.create_card{
+                        set = 'Joker',
+                        key = 'j_SnipersTV_Egg',
                         area = G.jokers
                     }
                     card:add_to_deck()
