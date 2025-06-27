@@ -116,16 +116,37 @@ SMODS.Back({
         unlock_card(self)
     end,
 })
+SMODS.Back({
+    key = "Utopia Deck",
+    loc_txt = {
+        name = "Utopia Deck",
+        text = {
+            "Start run with", 
+            "no {C:attention}Aces{} & {C:attention}Number{} Cards",
+            "{C:inactive}what? it's just reverse abandoned - blue",
+        },
+    },
+
+    config = {},
+    pos = { x = 0, y = 0 },
+    order = 1,
+    unlocked = true,
+    check_for_unlock = function(self, args)
+        unlock_card(self)
+    end,
+})
 --[[ 
 NEXT DECK!
 Bonkers Deck!
 A Combination of Magic, Nebula, Zodiac, Ghost, Anaglyph, Abandonded, Erratic, and Plasma.
 Benefits:
 too long to write rn
+(Credit to MaskedMan)
 ]]
 --[[
 NEXT NEXT DECK!
 Moneymaxxing Deck!
 Start with 1 Goated Temperance
 and A negative Gift Card.
+(Credit to WPawnToE4)
 ]]

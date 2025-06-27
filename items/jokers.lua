@@ -248,6 +248,73 @@ SMODS.Joker{
         unlock_card(self)
     end,
 }
+SMODS.Atlas{
+    key = 'Landscape',
+    path = 'Landscape.png',
+    px = 140,
+    py = 65,
+}
+SMODS.Joker{
+    key = 'Landscape',
+    loc_txt= {
+        name = 'Landscape',
+        text = { 'Debug.{X:mult,C:white}X#1# ',
+                'Debug. {C:blue}X2#2',
+                '{C:inactive}add a proper descrption here please...',
+            }
+    },
+    pools = { ['SnipersTVAdditions'] = true },
+    config = { extra = { LandscapeXMult = 1, LandscapeChips = 0} },
+    loc_vars = function(self, info_queue, card)
+        return { vars = { card.ability.extra.LandscapeXMult, card.ability.extra.LandscapeChips } }
+    end,
+    pos = {x=0, y= 0},
+    atlas = 'Landscape',
+    cost = 12,
+    rarity = 3,
+    unlocked = true,
+    discovered = true,
+    blueprint_compat = false,
+    eternal_compat = true,
+    perishable_compat = true,
+    check_for_unlock = function(self)
+        unlock_card(self)
+    end,
+    calculate = function(self, card, context)
+        if context.individual and context.cardarea == G.play and context.other_card:is_face()  then
+            card.ability.extra.LandscapeXMult = card.ability.extra.LandscapeXMult + 0.50
+            return {
+                message = "Blissful. (+0.50X)",
+                colour = G.C.RED,
+            }
+        else if context.individual and context.cardarea == G.play and not context.other_card:is_face()  then
+            card.ability.extra.LandscapeXMult = card.ability.extra.LandscapeXMult - 0.50
+            return {
+                message = "Why??? (-0.50X)",
+                colour = G.C.RED,
+            }
+        end        
+        if context.discard and context.other_card:is_face() then
+            card.ability.extra.LandscapeChips = card.ability.extra.LandscapeChips + 20
+            return {
+                message = "Chipful. (+20)",
+                colour = G.C.BLUE,
+            }
+        else if context.discard and not context.other_card:is_face() then
+            card.ability.extra.LandscapeChips = card.ability.extra.LandscapeChips - 20
+            return {
+                message = "Hurtful. (-20)",
+                colour = G.C.BLUE,
+            }
+        end
+        if context.joker_main then
+            return {
+                xmult = card.ability.extra.LandscapeXMult,
+                chips = card.ability.extra.LandscapeChips,
+            }
+        end
+    end,
+}
 SMODS.Rarity:take_ownership("Common", {
     key = "Common",
     loc_txt = {},
@@ -300,15 +367,6 @@ SMODS.Rarity:take_ownership("Legendary", {
     end,
 })
 --[[
-Landscape
-Rarity: Rare
-Joker starts at x1 mult, every face card played will add 0.5 mult to joker, 
-Every non face card played subtracts 0.5 mult. 
-Every face card discarded permanently adds 20 chips to card.
-Retrigger both once if both are held.
-(Credit to Masked Man)
-]]
---[[
 Yummer
 Rarity: Legendary
 Uprades EVERY card in deck
@@ -324,10 +382,12 @@ Rarity: Rare
 For each selected blind, gain X0.5mult and increse gain by 2 dollars.
 Starts out at 1X and 2 dollars.
 Obscures all vital information until sold.
+
 ]]
 --[[
 Goated Temperance
 For each dollar in all combined Joker sell value.
 This Joker gains X1.1 mult.
 (Excluding Egg)
+(Credit to WPawnToE4)
 ]]
