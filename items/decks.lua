@@ -99,12 +99,11 @@ SMODS.Back({
         name = "Hoarders Deck",
         text = {
             "A combination of:",
-            "{C:red}Red{} Deck, {C:blue}Blue{} Deck, {C:attention}Yellow{} Deck,",
-            "{C:green}Green{} Deck, and Black Deck.",
+            "The {C:red}Red{},{C:blue}Blue{},{C:attention}Yellow{},{C:green}Green{}, and {C:black}Black{} Decks.",
             "{C:blue}+1{} Hand, {C:red}+1{} Discard, {C:attention}+1{} Joker Slot.",
-            "Start with {C:attention}10{} Dollars.",
-            "Earn {C:attention}2{} dollars per {C:blue}hand{} left.",
-            "Earn {C:attention}1{} dollar per {C:blue}discard{} left."
+            "Start with {C:attention}$10{}.",
+            "{C:attention}$2{} dollars per {C:blue}hand{} left.",
+            "{C:attention}$1{} per {C:blue}discard{} left."
         },
     },
 
@@ -126,8 +125,11 @@ SMODS.Back({
             "{C:inactive}what? it's just reverse abandoned - blue",
         },
     },
+    apply = function(self, back)
+        G.GAME.starting_params.no_numbered_cards = true
+        G.GAME.starting_params.no_ace_cards = true
+    end,
 
-    config = {},
     pos = { x = 0, y = 0 },
     order = 1,
     unlocked = true,
