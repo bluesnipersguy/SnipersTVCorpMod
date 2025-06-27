@@ -153,9 +153,18 @@ SMODS.Back({
             "{C:inactive}what? it's just reverse abandoned - blue",
         },
     },
-    apply = function(self, back)
-        G.GAME.starting_params.no_numbered_cards = true
-        G.GAME.starting_params.no_ace_cards = true
+    apply = function()
+        G.E_MANAGER:add_event(Event({
+            func = function()
+                for i = #G.playing_cards, 1, -1 do
+                    local card = G.playing_cards[i]
+                    if not card:is_face() then
+                        card:remove()
+                    end
+                end
+                return true
+            end
+        }))
     end,
 
     pos = { x = 0, y = 0 },
