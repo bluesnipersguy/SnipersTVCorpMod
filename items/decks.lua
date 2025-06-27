@@ -120,7 +120,7 @@ SMODS.Back({
             end,
         }))
     end,
-})   
+})
 SMODS.Back({
     key = "HoarderDeck",
     loc_txt = {
