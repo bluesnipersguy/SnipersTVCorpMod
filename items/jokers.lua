@@ -4,6 +4,7 @@ SMODS.Atlas{
     px = 69,
     py = 96,
 }
+
 SMODS.Joker{
     key = 'ForestJoker',
     loc_txt= {
@@ -75,12 +76,14 @@ SMODS.Joker{
         end
     end,
 }
+
 SMODS.Atlas{
     key = 'SnakeEyes',
     path = 'SnakeEyes.png',
     px = 69,
     py = 96,
 }
+
 SMODS.Joker{
     key = 'SnakeEyes',
     loc_txt= {
@@ -115,12 +118,14 @@ SMODS.Joker{
         end
     end,
 }
+
 SMODS.Atlas{
     key = 'Hakari',
     path = 'Hakari.png',
     px = 69,
     py = 96,
 }
+
 SMODS.Joker{
     key = 'Hakari',
     loc_txt= {
@@ -159,12 +164,14 @@ SMODS.Joker{
         end
     end,
 }
+
 SMODS.Atlas{
     key = 'DarkJoker',
     path = 'DarkJoker.png',
     px = 69,
     py = 96,
 }
+
 SMODS.Joker{
     key = 'DarkJoker',
     loc_txt= {
@@ -218,12 +225,14 @@ SMODS.Joker{
         end
     end,
 }
+
 SMODS.Atlas{
     key = 'EggJoker',
     path = 'EggJoker.png',
     px = 71,
     py = 96,
 }
+
 SMODS.Joker{
     key = 'Egg',
     loc_txt= {
@@ -248,12 +257,14 @@ SMODS.Joker{
         unlock_card(self)
     end,
 }
+
 SMODS.Atlas{
     key = 'Landscape',
     path = 'Landscape.png',
     px = 140,
     py = 65,
 }
+
 SMODS.Joker{
     key = 'Landscape',
     loc_txt= {
@@ -287,21 +298,22 @@ SMODS.Joker{
                 message = "Blissful. (+0.50X)",
                 colour = G.C.RED,
             }
-        else if context.individual and context.cardarea == G.play and not context.other_card:is_face()  then
-            card.ability.extra.LandscapeXMult = card.ability.extra.LandscapeXMult - 0.50
+        elseif context.individual and context.cardarea == G.play and not context.other_card:is_face()  then
+            card.ability.extra.LandscapeXMult = math.max(card.ability.extra.LandscapeXMult - 0.50, 1)
             return {
                 message = "Why??? (-0.50X)",
                 colour = G.C.RED,
             }
-        end        
+        end
+
         if context.discard and context.other_card:is_face() then
             card.ability.extra.LandscapeChips = card.ability.extra.LandscapeChips + 20
             return {
                 message = "Chipful. (+20)",
                 colour = G.C.BLUE,
             }
-        else if context.discard and not context.other_card:is_face() then
-            card.ability.extra.LandscapeChips = card.ability.extra.LandscapeChips - 20
+        elseif context.discard and not context.other_card:is_face() then
+            card.ability.extra.LandscapeChips = math.max(card.ability.extra.LandscapeChips - 20, 0)
             return {
                 message = "Hurtful. (-20)",
                 colour = G.C.BLUE,
@@ -313,8 +325,9 @@ SMODS.Joker{
                 chips = card.ability.extra.LandscapeChips,
             }
         end
-    end,
+    end
 }
+
 SMODS.Rarity:take_ownership("Common", {
     key = "Common",
     loc_txt = {},
