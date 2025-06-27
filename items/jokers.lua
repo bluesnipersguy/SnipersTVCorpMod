@@ -236,6 +236,7 @@ SMODS.Joker{
     pools = { ['SnipersTVAdditions'] = true },
     pos = {x=0, y= 0},
     soul_pos = { x = 0, y = 1 },
+    atlas = 'EggJoker',
     cost = 35,
     rarity = 3,
     unlocked = true,
