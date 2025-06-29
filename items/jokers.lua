@@ -269,9 +269,13 @@ SMODS.Joker{
     key = 'Landscape',
     loc_txt= {
         name = 'Landscape',
-        text = { 'Debug.{X:mult,C:white}X#1# ',
-                'Debug. {C:blue}#2#',
-                '{C:inactive}add a proper descrption here please...',
+        text = { 'For each played {C:attention}face{} card, this Joker gains {X:mult,C:white}X0.50{} Mult{}.',
+                'For each played {C:attention}non-face{} card, this Joker loses {X:mult,C:white}X0.50{} Mult{}.',
+                'For each discarded {C:attention}face{} card, this Joker gains {C:blue}20 Chips{}.',
+                'For each discarded {C:attention}non-face{} card, this Joker loses {C:blue}20 Chips{}.',
+                '{C:inactive}Currently applying: {X:mult,C:white}X#1#{} Mult{}.',
+                '{C:inactive}Currently adding: {C:blue}#2# Chips.{}.',
+                '{C:inactive}A beautiful landscape filled with 1080p glory. - blue'
             }
     },
     pools = { ['SnipersTVAdditions'] = true },
@@ -340,8 +344,9 @@ SMODS.Joker {
     loc_txt = {
         name = "Estradiol",
         text = {
-            "Turns all played Kings and Jacks",
-            "into Queens.",
+            "Turns all played {C:attention}Kings{} and {C:attention}Jacks{}",
+            "into {C:attention}Queens{}.",
+            "{C:inactive}is this celeste from the hit game celeste? - blue{}"
         }
     },
     pools = { ["SnipersTVAdditions"] = true },
@@ -384,7 +389,65 @@ SMODS.Joker {
         end
     end
 }
+SMODS.Joker {
+    key = "Sugar",
+    loc_txt = {
+        name = "Sugar",
+        text = {
+            "All cards that are scored are converted to {C:attention}Queens{}.",
+            "For each {C:attention}Queen{} successfully scored, this joker gains {X:mult,C:white}X1{} Mult{}.'",
+            '{C:inactive}Currently applying: {X:mult,C:white}X#1#{} Mult{}.',
+            '{C:inactive}IS THAT SOURCHAOSCANDY FROM THE HIIT SERVICE TWITCH? - blue'
+        }
+    },
+    pools = { ["SnipersTVAdditions"] = true },
+    pos = { x = 0, y = 0 },
+    loc_vars = function(self, info_queue, card)
+        return { vars = { card.ability.extra.SugarXMult, } }
+    end,
+    cost = 32,
+    rarity = 4,
+    config = { extra = { SugarXMult = 1, } },
+    unlocked = true,
+    discovered = true,
+    blueprint_compat = true,
+    eternal_compat = true,
+    perishable_compat = true,
+    check_for_unlock = function(self)
+        unlock_card(self)
+    end,
 
+    calculate = function (self, card, context)
+        if context.before and context.main_eval and not context.blueprint then
+            local found = 0
+            for _, scored_card in ipairs(context.scoring_hand) do
+                print(scored_card:get_original_rank())
+                    found = found + 1
+                    assert(SMODS.change_base(scored_card, nil, "Queen"))
+                    G.E_MANAGER:add_event(Event({
+                        func = function()
+                            scored_card:juice_up()
+                            return true
+                        end
+                    }))
+            end
+            if found > 0 then
+                return {
+                    message = "Slimed!",
+                    colour = G.C.MONEY
+                }
+            end
+        end
+    if context.individual and context.cardarea == G.play and context.other_card:get_id() == 12 then
+            card.ability.extra.SugarXMult = card.ability.extra.SugarXMult + 1
+            return {
+                message = "Sugary! (+1 XMult)",
+                colour = G.C.RED,
+                xmult = card.ability.extra.SugarXMult,
+            }
+    end
+end,
+}
 SMODS.Rarity:take_ownership("Common", {
     key = "Common",
     loc_txt = {},
