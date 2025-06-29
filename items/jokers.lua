@@ -56,22 +56,24 @@ SMODS.Joker{
                 }
             end
         end
-        if context.card_added then
-            local name = context.card.ability and context.card.ability.name
-            if name == "Blueprint" or name == "Brainstorm" then
-                card.ability.extra.ForestRetriggers = card.ability.extra.ForestRetriggers + 1
-                return {
-                    message = "Welcome :3c"
-                }
+        if not context.blueprint then
+            if context.card_added then
+                local name = context.card.ability and context.card.ability.name
+                if name == "Blueprint" or name == "Brainstorm" then
+                    card.ability.extra.ForestRetriggers = card.ability.extra.ForestRetriggers + 1
+                    return {
+                        message = "Welcome :3c"
+                    }
+                end
             end
-        end
-        if context.selling_card then
-            local name = context.card.ability and context.card.ability.name
-            if name == "Blueprint" or name == "Brainstorm" then
-                card.ability.extra.ForestRetriggers = card.ability.extra.ForestRetriggers - 1
-                return {
-                    message = "Rest in peace 3:"
-                }
+            if context.selling_card then
+                local name = context.card.ability and context.card.ability.name
+                if name == "Blueprint" or name == "Brainstorm" then
+                    card.ability.extra.ForestRetriggers = card.ability.extra.ForestRetriggers - 1
+                    return {
+                        message = "Rest in peace 3:"
+                    }
+                end
             end
         end
     end,
@@ -368,7 +370,6 @@ SMODS.Joker {
         if context.before and context.main_eval and not context.blueprint then
             local found = 0
             for _, scored_card in ipairs(context.scoring_hand) do
-                print(scored_card:get_original_rank())
                 if scored_card:get_id() == 11 or scored_card:get_id() == 13 then
                     found = found + 1
                     assert(SMODS.change_base(scored_card, nil, "Queen"))
