@@ -5,7 +5,6 @@ priority = 28
 [[patches]]
 [patches.pattern]
 target = '=[SMODS _ "src/game_object.lua"]'
-#target = 'functions/common_events.lua'
 pattern = '''{ key = "Rare" },'''
 position = "after"
 payload = '''{ key = "Legendary" },'''

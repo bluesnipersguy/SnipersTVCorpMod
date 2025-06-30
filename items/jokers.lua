@@ -276,7 +276,7 @@ SMODS.Joker{
                 'For each discarded {C:attention}face{} card, this Joker gains {C:blue}20 Chips{}.',
                 'For each discarded {C:attention}non-face{} card, this Joker loses {C:blue}20 Chips{}.',
                 '{C:inactive}Currently applying: {X:mult,C:white}X#1#{} Mult{}.',
-                '{C:inactive}Currently adding: {C:blue}#2# Chips.{}.',
+                '{C:inactive}Currently adding: {C:blue}#2# Chips{}.',
                 '{C:inactive}A beautiful landscape filled with 1080p glory. - blue'
             }
     },
