@@ -494,7 +494,7 @@ SMODS.Joker{
         return {card.ability.extra.Temperance2XMult}
     end,
 }
-SMODS.Joker{
+--[[SMODS.Joker{
     key = 'mathconvert',
     loc_txt= {
         name = 'math.convert(#1#)',
@@ -523,6 +523,7 @@ SMODS.Joker{
     end,
     calculate = function(self, card, context)
 }
+    ]]
 SMODS.Rarity:take_ownership("Common", {
     key = "Common",
     loc_txt = {},
