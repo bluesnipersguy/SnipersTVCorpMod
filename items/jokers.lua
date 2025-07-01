@@ -463,7 +463,7 @@ SMODS.Joker {
     pos = {x=0, y= 0},
     loc_vars = function(self, info_queue, card)
         local sell_cost = 0
-        for i = 1, #G.jokers.cards do
+        for i = 1, (G.jokers and #G.jokers.cards or 0) do
             if G.jokers.cards[i].ability.set == 'Joker' then
                 sell_cost = sell_cost + G.jokers.cards[i].sell_cost / 10.0
             end
@@ -495,6 +495,65 @@ SMODS.Joker {
             }
         end
     end,
+}
+SMODS.Joker {
+    key = 'longquiet',
+    loc_txt = {
+        name = 'The Long Quiet',
+        text = {
+            'For each {C:attention}Queen{} added to deck,',
+            'gain {X:mult,C:white}X0.5{} Mult.',
+            'For each {C:attention}Queen{} removed from deck,',
+            'Lose {X:mult,C:white}X0.5{} Mult.',
+            '{C:inactive}(Currently {X:mult,C:white}X#1#{C:inactive})',
+        }
+    },
+    pools = { ['SnipersTVAdditions'] = true },
+    pos = {x=0, y= 0},
+    loc_vars = function(self, info_queue, card)
+        return { vars = { card.ability.extra.LongQuietXMult, } }
+    end,
+    cost = 32,
+    rarity = 4,
+    config = { extra = { LongQuietXMult = 1, } },
+    unlocked = true,
+    discovered = true,
+    blueprint_compat = true,
+    eternal_compat = true,
+    perishable_compat = true,
+    check_for_unlock = function(self)
+        unlock_card(self)
+    end,
+    calculate = function (self, card, context)
+        if context.playing_card_added and not context.blueprint then
+            local found = false
+            for k,v in pairs(context.cards) do
+                if v:get_id() == 12 then
+                    card.ability.extra.LongQuietXMult = card.ability.extra.LongQuietXMult + 0.5
+                    found = true
+                end
+            end
+            if found then return { message = "Saved!" } end
+        elseif context.remove_playing_cards and not context.blueprint then
+            local removed_value = false
+            for _, removed_card in ipairs(context.removed) do
+                if removed_card:get_id() == 12 then
+                    card.ability.extra.LongQuietXMult = card.ability.extra.LongQuietXMult - 0.5
+                    removed_value = true
+                end
+            end
+            if removed_value then
+                card.ability.extra.LongQuietXMult = math.max(card.ability.extra.LongQuietXMult, 1)
+                return {
+                    message = "Slayed!",
+                }
+            end
+        elseif context.joker_main then
+            return {
+                xmult = card.ability.extra.LongQuietXMult,
+            }
+        end
+    end
 }
 --[[SMODS.Joker{
     key = 'mathconvert',
