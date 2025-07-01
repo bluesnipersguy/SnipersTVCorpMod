@@ -449,6 +449,80 @@ SMODS.Joker {
     end
 end,
 }
+SMODS.Joker{
+    key = 'Temperance2',
+    loc_txt= {
+        name = 'Temperance II (Goated Temperance)',
+        text = { 'For each {C:attention}${} in Joker sell value.',
+                 'This joker gains {X:mult,C:white}X0.10{} Mult{}.',
+                 '{C:inactive}Currently applying: {X:mult,C:white}X#1#{} Mult{}',
+                '{C:inactive}MONEY MAXXING!!! - blue',
+            }
+    },
+    pools = { ['SnipersTVAdditions'] = true },
+    pos = {x=0, y= 0},
+    config = { extra = { Temperance2XMult = 1., } },
+        loc_vars = function(self, info_queue, card)
+        local money = 0
+        if G.jokers then
+            for i = 1, #G.jokers.cards do
+                if G.jokers.cards[i].ability.set == 'Joker' then
+                    card.ability.extra.Temperance2XMult = card.ability.extra.Temperance2XMult + G.jokers.cards[i].sell_cost
+                end
+            end
+        end
+        card.ability.extra.Temperance2XMult = math.min(card.ability.extra.Temperance2XMult, card.ability.extra.Temperance2XMult)
+    end,
+    cost = 30,
+    rarity = 3,
+    unlocked = true,
+    discovered = true,
+    blueprint_compat = true,
+    eternal_compat = true,
+    perishable_compat = true,
+    check_for_unlock = function(self)
+        unlock_card(self)
+    end,
+    calculate = function(self, card, context)
+            for i = 1, #G.jokers.cards do
+                if G.jokers.cards[i].ability.set == 'Joker' then
+                    card.ability.extra.Temperance2XMult = card.ability.extra.Temperance2XMult + G.jokers.cards[i].sell_cost
+                end
+            end
+        end
+            card.ability.extra.Temperance2XMult = math.min(card.ability.extra.Temperance2XMult, card.ability.extra.Temperance2XMult)
+        return {card.ability.extra.Temperance2XMult}
+    end,
+}
+SMODS.Joker{
+    key = 'mathconvert',
+    loc_txt= {
+        name = 'math.convert(#1#)',
+        text = { 'Copies the incoming flat {C:red}mult{}.'',
+                 'At end of play.,'
+                 'Convert flat {C:red}mult{} into {X:mult,C:white}XMult{}.',
+                 '{X:mult,C:white}X0.25{} Mult{}.',
+                 '{C:inactive}Currently converting, {C:red}#1#{} into {X:mult,C:white}X#2#{} Mult{}',
+                '{C:inactive}Finally... My lua skills paid off. - blue',
+            }
+    },
+    pools = { ['SnipersTVAdditions'] = true },
+    pos = {x=0, y= 0},
+    config = { extra = { Temperance2XMult = 1., } },
+        loc_vars = function(self, info_queue, card)
+        end,
+    cost = 30,
+    rarity = 3,
+    unlocked = true,
+    discovered = true,
+    blueprint_compat = true,
+    eternal_compat = true,
+    perishable_compat = true,
+    check_for_unlock = function(self)
+        unlock_card(self)
+    end,
+    calculate = function(self, card, context)
+}
 SMODS.Rarity:take_ownership("Common", {
     key = "Common",
     loc_txt = {},
@@ -524,4 +598,30 @@ For each dollar in all combined Joker sell value.
 This Joker gains X1.1 mult.
 (Excluding Egg)
 (Credit to WPawnToE4)
+]]
+--[[
+Shigesato Itoi Joker: 
+If played hand contains a two pair that has ONLY hearts, 
+It destroys all jokers but has a 
+1/10 to add X1982 mult, 
+1/5 chance to Add x1994 Mult,
+1/15 chance to add X2006 mult
+(Credit to Masked Man)
+]]
+--[[
+fat ahh joker
+if there's a food joker in your joker slots
+destroy it
+gain 
+2x mult 
+5 mult 
+2x chips
+5 chips
+(Credit to Shan)
+]]
+--[[
+Steel Ticket
+Each scored steel card gives 2X mult.
+(kinda goated)
+(Credit to Shan)
 ]]
