@@ -461,9 +461,15 @@ SMODS.Joker {
     },
     pools = { ['SnipersTVAdditions'] = true },
     pos = {x=0, y= 0},
-    config = { extra = { Temperance2XMult = 1., } },
     loc_vars = function(self, info_queue, card)
-        return { vars = { card.ability.extra.Temperance2XMult } }
+        local sell_cost = 0
+        for i = 1, #G.jokers.cards do
+            if G.jokers.cards[i].ability.set == 'Joker' then
+                sell_cost = sell_cost + G.jokers.cards[i].sell_cost / 10.0
+            end
+        end
+
+        return { vars = { sell_cost + 1 } }
     end,
     cost = 30,
     rarity = 3,
@@ -476,18 +482,16 @@ SMODS.Joker {
         unlock_card(self)
     end,
     calculate = function(self, card, context)
-        if context.card_added then
-            if context.cardarea == G.jokers then
-                card.ability.extra.Temperance2XMult = 1
-                for i = 1, #G.jokers.cards do
-                    if G.jokers.cards[i].ability.set == 'Joker' then
-                        card.ability.extra.Temperance2XMult = card.ability.extra.Temperance2XMult + G.jokers.cards[i].sell_cost / 10.0
-                    end
+        if context.joker_main then
+            local sell_cost = 0
+            for i = 1, #G.jokers.cards do
+                if G.jokers.cards[i].ability.set == 'Joker' then
+                    sell_cost = sell_cost + G.jokers.cards[i].sell_cost / 10.0
                 end
             end
-        elseif context.joker_main then
+
             return {
-                xmult = card.ability.extra.Temperance2XMult
+                xmult = sell_cost + 1
             }
         end
     end,
