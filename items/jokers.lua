@@ -449,7 +449,7 @@ SMODS.Joker {
     end
 end,
 }
-SMODS.Joker{
+SMODS.Joker {
     key = 'Temperance2',
     loc_txt= {
         name = 'Temperance II (Goated Temperance)',
@@ -462,16 +462,8 @@ SMODS.Joker{
     pools = { ['SnipersTVAdditions'] = true },
     pos = {x=0, y= 0},
     config = { extra = { Temperance2XMult = 1., } },
-        loc_vars = function(self, info_queue, card)
-        local money = 0
-        if G.jokers then
-            for i = 1, #G.jokers.cards do
-                if G.jokers.cards[i].ability.set == 'Joker' then
-                    card.ability.extra.Temperance2XMult = card.ability.extra.Temperance2XMult + G.jokers.cards[i].sell_cost
-                end
-            end
-        end
-        card.ability.extra.Temperance2XMult = math.min(card.ability.extra.Temperance2XMult, card.ability.extra.Temperance2XMult)
+    loc_vars = function(self, info_queue, card)
+        return { vars = { card.ability.extra.Temperance2XMult } }
     end,
     cost = 30,
     rarity = 3,
@@ -484,14 +476,20 @@ SMODS.Joker{
         unlock_card(self)
     end,
     calculate = function(self, card, context)
-            for i = 1, #G.jokers.cards do
-                if G.jokers.cards[i].ability.set == 'Joker' then
-                    card.ability.extra.Temperance2XMult = card.ability.extra.Temperance2XMult + G.jokers.cards[i].sell_cost
+        if context.card_added then
+            if context.cardarea == G.jokers then
+                card.ability.extra.Temperance2XMult = 1
+                for i = 1, #G.jokers.cards do
+                    if G.jokers.cards[i].ability.set == 'Joker' then
+                        card.ability.extra.Temperance2XMult = card.ability.extra.Temperance2XMult + G.jokers.cards[i].sell_cost / 10.0
+                    end
                 end
             end
+        elseif context.joker_main then
+            return {
+                xmult = card.ability.extra.Temperance2XMult
+            }
         end
-            card.ability.extra.Temperance2XMult = math.min(card.ability.extra.Temperance2XMult, card.ability.extra.Temperance2XMult)
-        return {card.ability.extra.Temperance2XMult}
     end,
 }
 --[[SMODS.Joker{
