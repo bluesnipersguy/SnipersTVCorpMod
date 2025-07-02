@@ -501,10 +501,10 @@ SMODS.Joker {
     loc_txt = {
         name = 'The Long Quiet',
         text = {
-            'For each {C:attention}Queen{} added to deck,',
-            'gain {X:mult,C:white}X0.5{} Mult.',
-            'For each {C:attention}Queen{} removed from deck,',
-            'Lose {X:mult,C:white}X0.5{} Mult.',
+            'For each {C:attention}Queen{} added',
+            'to deck, gain {X:mult,C:white}X0.5{} Mult.',
+            'For each {C:attention}Queen{} removed',
+            'from deck, lose {X:mult,C:white}X0.5{} Mult.',
             '{C:inactive}(Currently {X:mult,C:white}X#1#{C:inactive})',
         }
     },
@@ -513,8 +513,8 @@ SMODS.Joker {
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.LongQuietXMult, } }
     end,
-    cost = 32,
-    rarity = 4,
+    cost = 7,
+    rarity = 3,
     config = { extra = { LongQuietXMult = 1, } },
     unlocked = true,
     discovered = true,

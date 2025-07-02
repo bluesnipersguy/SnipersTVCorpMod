@@ -2,3 +2,4 @@
 dependencies/
 .vscode/
 run_balatro.sh
+balatro-tui
