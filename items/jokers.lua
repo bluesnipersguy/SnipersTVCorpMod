@@ -422,7 +422,6 @@ SMODS.Joker {
         if context.before and context.main_eval and not context.blueprint then
             local found = 0
             for _, scored_card in ipairs(context.scoring_hand) do
-                print(scored_card:get_original_rank())
                     found = found + 1
                     assert(SMODS.change_base(scored_card, nil, "Queen"))
                     G.E_MANAGER:add_event(Event({
@@ -439,14 +438,14 @@ SMODS.Joker {
                 }
             end
         end
-    if context.individual and context.cardarea == G.play and context.other_card:get_id() == 12 then
-            card.ability.extra.SugarXMult = card.ability.extra.SugarXMult + 1
-            return {
-                message = "Sugary! (+1 XMult)",
-                colour = G.C.RED,
-                xmult = card.ability.extra.SugarXMult,
-            }
-    end
+        if context.individual and context.cardarea == G.play and context.other_card:get_id() == 12 then
+                card.ability.extra.SugarXMult = card.ability.extra.SugarXMult + 1
+                return {
+                    message = "Sugary! (+1 XMult)",
+                    colour = G.C.RED,
+                    xmult = card.ability.extra.SugarXMult,
+                }
+        end
 end,
 }
 SMODS.Joker {
