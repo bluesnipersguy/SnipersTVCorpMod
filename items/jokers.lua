@@ -422,7 +422,6 @@ SMODS.Joker {
         if context.before and context.main_eval and not context.blueprint then
             local found = 0
             for _, scored_card in ipairs(context.scoring_hand) do
-                print(scored_card:get_original_rank())
                     found = found + 1
                     assert(SMODS.change_base(scored_card, nil, "Queen"))
                     G.E_MANAGER:add_event(Event({
@@ -439,14 +438,14 @@ SMODS.Joker {
                 }
             end
         end
-    if context.individual and context.cardarea == G.play and context.other_card:get_id() == 12 then
-            card.ability.extra.SugarXMult = card.ability.extra.SugarXMult + 1
-            return {
-                message = "Sugary! (+1 XMult)",
-                colour = G.C.RED,
-                xmult = card.ability.extra.SugarXMult,
-            }
-    end
+        if context.individual and context.cardarea == G.play and context.other_card:get_id() == 12 then
+                card.ability.extra.SugarXMult = card.ability.extra.SugarXMult + 1
+                return {
+                    message = "Sugary! (+1 XMult)",
+                    colour = G.C.RED,
+                    xmult = card.ability.extra.SugarXMult,
+                }
+        end
 end,
 }
 SMODS.Joker {
@@ -501,10 +500,10 @@ SMODS.Joker {
     loc_txt = {
         name = 'The Long Quiet',
         text = {
-            'For each {C:attention}Queen{} added to deck,',
-            'gain {X:mult,C:white}X0.5{} Mult.',
-            'For each {C:attention}Queen{} removed from deck,',
-            'Lose {X:mult,C:white}X0.5{} Mult.',
+            'For each {C:attention}Queen{} added',
+            'to deck, gain {X:mult,C:white}X0.5{} Mult.',
+            'For each {C:attention}Queen{} removed',
+            'from deck, lose {X:mult,C:white}X0.5{} Mult.',
             '{C:inactive}(Currently {X:mult,C:white}X#1#{C:inactive})',
         }
     },
@@ -513,8 +512,8 @@ SMODS.Joker {
     loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.LongQuietXMult, } }
     end,
-    cost = 32,
-    rarity = 4,
+    cost = 7,
+    rarity = 3,
     config = { extra = { LongQuietXMult = 1, } },
     unlocked = true,
     discovered = true,
