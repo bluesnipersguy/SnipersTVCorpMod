@@ -555,22 +555,47 @@ SMODS.Joker {
         end
     end
 }
---[[SMODS.Joker{
+if not SnipersTV then SnipersTV = {} end
+if not SnipersTV.MathConvert then SnipersTV.MathConvert = 1 end
+local scie = SMODS.calculate_individual_effect
+function SMODS.calculate_individual_effect(effect, scored_card, key, amount, from_edition)
+	if (
+	    key == "mult"
+	    or key == "mult_mod"
+	) and amount ~= 1
+	then
+        local mathconvertthere = false
+        local _mathconvertcard  = nil
+        for i = 1, #G.jokers.cards do
+            if G.jokers.cards[i].ability.name == 'j_SnipersTV_mathconvert' then
+                mathconvertthere = true
+                _mathconvertcard = G.jokers.cards[i]
+            end
+        end
+        if mathconvertthere == true then
+            SnipersTV.MathConvert = SnipersTV.MathConvert + amount
+            card_eval_status_text(_mathconvertcard,'jokers',nil,nil,nil,{message = "Copied +" ..amount.."!"})
+            amount = 1
+        end
+	end
+	local ret = scie(effect, scored_card, key, amount, from_edition)
+	return ret
+	end
+SMODS.Joker{
     key = 'mathconvert',
     loc_txt= {
         name = 'math.convert(#1#)',
-        text = { 'Copies the incoming flat {C:red}mult{}.'',
-                 'At end of play.,'
+        text = { 'Copies the incoming flat {C:red}mult{}.',
+                 'At end of play.',
                  'Convert flat {C:red}mult{} into {X:mult,C:white}XMult{}.',
-                 '{X:mult,C:white}X0.25{} Mult{}.',
-                 '{C:inactive}Currently converting, {C:red}#1#{} into {X:mult,C:white}X#2#{} Mult{}',
-                '{C:inactive}Finally... My lua skills paid off. - blue',
+                 '{C:inactive}Currently converting, {C:red}#1#{} into {X:mult,C:white}X#1#{} Mult{}',
+                '{C:inactive}Finally... My lua skills paid off. - blue'
             }
     },
     pools = { ['SnipersTVAdditions'] = true },
     pos = {x=0, y= 0},
-    config = { extra = { Temperance2XMult = 1., } },
         loc_vars = function(self, info_queue, card)
+        return { vars = {SnipersTV.MathConvert} }
         end,
     cost = 30,
     rarity = 3,
@@ -583,8 +608,20 @@ SMODS.Joker {
         unlock_card(self)
     end,
     calculate = function(self, card, context)
+        if context.joker_main then
+            return {
+                message = 'X' .. SnipersTV.MathConvert,
+                xmult = SnipersTV.MathConvert
+            }
+        end
+        if context.end_of_round or context.setting_blind then
+            if SnipersTV.MathConvert ~= 1 then
+                SnipersTV.MathConvert = 1
+            end
+        end
+    end,
 }
-    ]]
+
 SMODS.Rarity:take_ownership("Common", {
     key = "Common",
     loc_txt = {},
