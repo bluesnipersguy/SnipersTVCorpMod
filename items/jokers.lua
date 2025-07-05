@@ -26,8 +26,10 @@ SMODS.Joker{
     eternal_compat = true,
     perishable_compat = true,
     atlas = 'ForestJoker',
-    config = { extra = { ForestRetriggers = 0, } },
     loc_vars = function(self, info_queue, center)
+        if not G.jokers then
+            return { vars = {0} }
+        end
         return { vars = {#G.jokers.cards} }
     end,
     check_for_unlock = function(self)
