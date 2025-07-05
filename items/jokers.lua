@@ -9,8 +9,8 @@ SMODS.Joker{
     key = 'ForestJoker',
     loc_txt= {
         name = 'Forest',
-        text = {'For each {C:blue}Blueprint{} and {C:red}Brainstorm{} equipped,',
-                'retrigger all {C:blue}Blueprint{} and {C:red}Brainstorm{} Jokers an extra time.',
+        text = {'For each {C:attention}Joker{} held in hand,',
+                'retrigger all {C:attention}Jokers{} an extra time.',
                 'Currently retriggering: {C:attention}#1#{} extra time(s).',
                 '{C:inactive} My cute boyfriend! - bluesnipersguy{}',
             }
@@ -40,40 +40,31 @@ SMODS.Joker{
         local count = 0
         for _, j in ipairs(G.jokers.cards) do
             local name = j.ability and j.ability.name
-            if name == "Blueprint" or name == "Brainstorm" then
                 count = count + 1
-            end
         end
         card.ability.extra.ForestRetriggers = count
     end,
     calculate = function(self, card, context)
-        if context.retrigger_joker_check and not context.retrigger_joker then
-            local name = context.other_card.ability and context.other_card.ability.name
-            if name == "Blueprint" or name == "Brainstorm" then
+        if context.retrigger_joker_check and not context.retrigger_joker and not context.self then
                 return {
                     repetitions = card.ability.extra.ForestRetriggers,
                     message = "There ya go! :3c"
                 }
-            end
         end
-        if not context.blueprint then
+        if not context.blueprint then    
             if context.card_added then
-                local name = context.card.ability and context.card.ability.name
-                if name == "Blueprint" or name == "Brainstorm" then
-                    card.ability.extra.ForestRetriggers = card.ability.extra.ForestRetriggers + 1
+                card.ability.extra.ForestRetriggers = card.ability.extra.ForestRetriggers + 1
                     return {
                         message = "Welcome :3c"
                     }
                 end
-            end
+            end        
+            if not context.blueprint then 
             if context.selling_card then
-                local name = context.card.ability and context.card.ability.name
-                if name == "Blueprint" or name == "Brainstorm" then
                     card.ability.extra.ForestRetriggers = card.ability.extra.ForestRetriggers - 1
                     return {
                         message = "Rest in peace 3:"
                     }
-                end
             end
         end
     end,
@@ -179,10 +170,10 @@ SMODS.Joker{
     loc_txt= {
         name = 'Harold',
         text = { 'Starts out with {X:mult,C:white}X1.5{} Mult{}',
-                 'For each {C:attention}consectutive{}',
+                 'gain {X:mult,C:white}X0.25{} Mult{},',         
+                 'for each {C:attention}consectutive{}',
                  '{C:red}discarded{} {C:attention}face{} card,',
                  'that is not a {C:attention}Queen{}.',
-                 'This joker gains {X:mult,C:white}X0.25{} Mult{}.',
                  'Unleash this {X:mult,C:white}XMult{} on played {C:attention}Queen{} Cards.',
                  '{C:inactive}Currently applying: {X:mult,C:white}X#1#{} Mult{}',
                 '{C:inactive}A true gentleman. - blue',
@@ -271,12 +262,10 @@ SMODS.Joker{
     key = 'Landscape',
     loc_txt= {
         name = 'Landscape',
-        text = { 'For each played {C:attention}face{} card, this Joker gains {X:mult,C:white}X0.50{} Mult{}.',
-                'For each played {C:attention}non-face{} card, this Joker loses {X:mult,C:white}X0.50{} Mult{}.',
-                'For each discarded {C:attention}face{} card, this Joker gains {C:blue}20 Chips{}.',
-                'For each discarded {C:attention}non-face{} card, this Joker loses {C:blue}20 Chips{}.',
+        text = { 'For each scored {C:attention}face{} card, gain {X:mult,C:white}X0.50{} Mult{}, if discarded, gain {C:blue}20 Chips{}.',
+                 'For each scored non-{C:attention}face{} card, lose {X:mult,C:white}X0.50{} Mult{}, if discarded, lose {C:blue}20 Chips{}.',
                 '{C:inactive}Currently applying: {X:mult,C:white}X#1#{} Mult{}.',
-                '{C:inactive}Currently adding: {C:blue}#2# Chips{}.',
+                '{C:inactive}Currently adding: {C:blue}+#2# Chips{}.',
                 '{C:inactive}A beautiful landscape filled with 1080p glory. - blue'
             }
     },
@@ -396,9 +385,10 @@ SMODS.Joker {
         name = "Sugar",
         text = {
             "All cards that are scored are converted to {C:attention}Queens{}.",
-            "For each {C:attention}Queen{} successfully scored, this joker gains {X:mult,C:white}X1{} Mult{}.'",
+            "For each {C:attention}Queen{} successfully scored, this joker gains {X:mult,C:white}X1{} Mult{}.",
+            "Unleash {X:mult,C:white}XMult{}. on scored {C:attention}Queen{} cards.",
             '{C:inactive}Currently applying: {X:mult,C:white}X#1#{} Mult{}.',
-            '{C:inactive}IS THAT SOURCHAOSCANDY FROM THE HIIT SERVICE TWITCH? - blue'
+            '{C:inactive}IS THAT {C:legendary}SOURCHAOSCANDY{} FROM THE HIT SERVICE TWITCH? - blue{}'
         }
     },
     pools = { ["SnipersTVAdditions"] = true },
@@ -422,7 +412,8 @@ SMODS.Joker {
         if context.before and context.main_eval and not context.blueprint then
             local found = 0
             for _, scored_card in ipairs(context.scoring_hand) do
-                    found = found + 1
+                if not scored_card:get_id() == 12 then    
+                found = found + 1
                     assert(SMODS.change_base(scored_card, nil, "Queen"))
                     G.E_MANAGER:add_event(Event({
                         func = function()
@@ -431,6 +422,7 @@ SMODS.Joker {
                         end
                     }))
             end
+        end
             if found > 0 then
                 return {
                     message = "Slimed!",
@@ -452,8 +444,8 @@ SMODS.Joker {
     key = 'Temperance2',
     loc_txt= {
         name = 'Temperance II (Goated Temperance)',
-        text = { 'For each {C:attention}${} in Joker sell value.',
-                 'This joker gains {X:mult,C:white}X0.10{} Mult{}.',
+        text = { 'For each {C:attention}${} in Joker sell value,',
+                 'gain {X:mult,C:white}X0.10{} Mult{}.',
                  '{C:inactive}Currently applying: {X:mult,C:white}X#1#{} Mult{}',
                 '{C:inactive}MONEY MAXXING!!! - blue',
             }
@@ -470,7 +462,7 @@ SMODS.Joker {
 
         return { vars = { sell_cost + 1 } }
     end,
-    cost = 30,
+    cost = 8,
     rarity = 3,
     unlocked = true,
     discovered = true,
@@ -584,10 +576,11 @@ SMODS.Joker{
     key = 'mathconvert',
     loc_txt= {
         name = 'math.convert(#1#)',
-        text = { 'Copies the incoming flat {C:red}mult{}.',
-                 'At end of play.',
-                 'Convert flat {C:red}mult{} into {X:mult,C:white}XMult{}.',
-                 '{C:inactive}Currently converting, {C:red}#1#{} into {X:mult,C:white}X#1#{} Mult{}',
+        text = { 
+                 'At end of play,',    
+                 'copy incoming flat {C:red}+Mult{},',
+                 'Convert flat {C:red}+Mult{} into {X:mult,C:white}XMult{}.',
+                 '{C:inactive}Currently converting, {C:red}+#1#{} into {X:mult,C:white}X#1#{} Mult{}',
                 '{C:inactive}Finally... My lua skills paid off. - blue'
             }
     },
@@ -596,7 +589,7 @@ SMODS.Joker{
         loc_vars = function(self, info_queue, card)
         return { vars = {SnipersTV.MathConvert} }
         end,
-    cost = 30,
+    cost = 10,
     rarity = 3,
     unlocked = true,
     discovered = true,

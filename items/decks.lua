@@ -10,9 +10,8 @@ SMODS.Back({
         name = "Forest Deck",
         text = {
             "Start with 2 Jokers,",
-            "a {C:eternal}Eternal,{} {C:negative}Negative{}",
-            "{C:legendary}Legendary{} {C:green}Forest{} Joker",
-            "and a {C:blue}Blueprint{} Joker",
+            "a {C:inactive}Negative,{} {C:legendary}Legendary{} {C:green}Forest{} Joker",
+            "and a {C:red}Rare{} {C:blue}Blueprint{} Joker",
             "{C:attention}+1{} Joker Slot",
         }
     },
@@ -31,7 +30,6 @@ SMODS.Back({
                         set = 'Joker',
                         key = 'j_SnipersTV_ForestJoker',
                         edition = 'e_negative',
-                        sticker = 'eternal',
                         area = G.jokers
                     }
                     card:add_to_deck()
@@ -65,12 +63,15 @@ SMODS.Back({
     loc_txt = {
         name = "Gentleman Deck",
         text = {
-            "Start with a",
-            "{C:legendary} Legendary{} {C:red}Harold{} Joker"
+            "Start with 2 Jokers,",
+            "a {C:legendary}Legendary{} {C:red}Harold{} Joker,",
+            "a {C:red}Rare DNA{} Joker,",
+            "and 2 {C:attention}copies{} of Death."
         },
     },
     atlas = 'DarkDeck',
     pos = { x = 0, y = 0 },
+    config = { consumables = { 'c_death', 'c_death' } },
     order = 1,
     unlocked = true,
 
@@ -81,6 +82,13 @@ SMODS.Back({
                     local card = SMODS.create_card{
                         set = 'Joker',
                         key = 'j_SnipersTV_DarkJoker',
+                        area = G.jokers
+                    }
+                    card:add_to_deck()
+                    G.jokers:emplace(card)
+                    local card = SMODS.create_card{
+                        set = 'Joker',
+                        key = 'j_dna',
                         area = G.jokers
                     }
                     card:add_to_deck()
