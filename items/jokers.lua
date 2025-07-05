@@ -222,11 +222,16 @@ SMODS.Joker{
     key = 'Egg',
     loc_txt= {
         name = 'Egg (illudethis)',
-        text = { '{C:red}Rare{} Jokers are much more common in shop.',
-                '{C:legendary}Legendary{} jokers can also appear in shop as well.',
+        text = { '{C:legendary}Legendary{} Jokers can be found in the {C:attention}shop{}.',
+                '{C:legendary}Legendary{} jokers are more common every reroll.',
+                '{inactive}Chance: {X:mult,C:white}#1#%{}',
                 '{C:inactive}These damn script kiddies. - blue',
             }
     },
+    config = { extra = { BuffedOdds = 0, } },
+    loc_vars = function(self, info_queue, card)
+        return { vars = { math.min(50, card.ability.extra.BuffedOdds * 100) } }
+    end,
     pools = { ['SnipersTVAdditions'] = true },
     pos = {x=0, y= 0},
     soul_pos = { x = 0, y = 1 },
@@ -240,6 +245,17 @@ SMODS.Joker{
     perishable_compat = true,
     check_for_unlock = function(self)
         unlock_card(self)
+    end,
+    calculate = function(self, card, context)
+        if context.reroll_shop then
+            card.ability.extra.BuffedOdds = math.min(0.5, card.ability.extra.BuffedOdds + 0.01)
+            return {
+                message = "Buffed!",
+            }
+        end
+        if context.starting_shop then
+            card.ability.extra.BuffedOdds = 0.0
+        end
     end,
 }
 
@@ -404,7 +420,7 @@ SMODS.Joker {
         if context.before and context.main_eval and not context.blueprint then
             local found = 0
             for _, scored_card in ipairs(context.scoring_hand) do
-                if not scored_card:get_id() == 12 then    
+                if not scored_card:get_id() == 12 then
                 found = found + 1
                     assert(SMODS.change_base(scored_card, nil, "Queen"))
                     G.E_MANAGER:add_event(Event({
@@ -612,9 +628,16 @@ SMODS.Rarity:take_ownership("Common", {
     default_weight = 0.7,
     badge_colour = HEX('009dff'),
     get_weight = function(self, weight, object_type)
-        if #find_joker('j_SnipersTV_Egg') > 0 then
-            return 0.55
+        local eggs = find_joker('j_SnipersTV_Egg')
+        if #eggs > 0 then
+            local chance_mod = 0
+            for key,egg in ipairs(eggs) do
+                chance_mod = chance_mod + egg.ability.extra.BuffedOdds
+            end
+            chance_mod = 1.0 - math.min(chance_mod, 0.5)
+            return weight * chance_mod
         end
+
         return weight
     end,
 })
@@ -625,9 +648,16 @@ SMODS.Rarity:take_ownership("Uncommon", {
     default_weight = 0.25,
     badge_colour = HEX("4BC292"),
     get_weight = function(self, weight, object_type)
-        if #find_joker('j_SnipersTV_Egg') > 0 then
-            return 0.15
+        local eggs = find_joker('j_SnipersTV_Egg')
+        if #eggs > 0 then
+            local chance_mod = 0
+            for key,egg in ipairs(eggs) do
+                chance_mod = chance_mod + egg.ability.extra.BuffedOdds
+            end
+            chance_mod = 1.0 - math.min(chance_mod, 0.5)
+            return weight * chance_mod
         end
+
         return weight
     end,
 })
@@ -638,9 +668,16 @@ SMODS.Rarity:take_ownership("Rare", {
     default_weight = 0.05,
     badge_colour = HEX('fe5f55'),
     get_weight = function(self, weight, object_type)
-        if #find_joker('j_SnipersTV_Egg') > 0 then
-            return 0.25
+        local eggs = find_joker('j_SnipersTV_Egg')
+        if #eggs > 0 then
+            local chance_mod = 0
+            for key,egg in ipairs(eggs) do
+                chance_mod = chance_mod + egg.ability.extra.BuffedOdds
+            end
+            chance_mod = 1.0 - math.min(chance_mod, 0.5)
+            return weight * chance_mod
         end
+
         return weight
     end,
 })
@@ -651,9 +688,16 @@ SMODS.Rarity:take_ownership("Legendary", {
     default_weight = 0.0,
     badge_colour = HEX("b26cbb"),
     get_weight = function(self, weight, object_type)
-        if #find_joker('j_SnipersTV_Egg') > 0 then
-            return 0.05
+        local eggs = find_joker('j_SnipersTV_Egg')
+        if #eggs > 0 then
+            local chance_mod = 0
+            for key,egg in ipairs(eggs) do
+                chance_mod = chance_mod + egg.ability.extra.BuffedOdds
+            end
+            chance_mod = math.min(chance_mod, 0.5)
+            return chance_mod
         end
+
        return weight
     end,
 })
