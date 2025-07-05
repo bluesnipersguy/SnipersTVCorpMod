@@ -37,26 +37,28 @@ SMODS.Joker{
     end,
     calculate = function(self, card, context)
         if context.retrigger_joker_check then
-            local name = context.other_card.ability and context.other_card.ability.name
             return {
                 repetitions = #G.jokers.cards,
                 message = "There ya go! :3c"
             }
         end
-        if context.card_added then
-            local name = context.card.ability and context.card.ability.name
-            card.ability.extra.ForestRetriggers = card.ability.extra.ForestRetriggers + 1
-            return {
-                message = "Welcome :3c"
-            }
-        end
-        if context.selling_card then
-            local name = context.card.ability and context.card.ability.name
-            card.ability.extra.ForestRetriggers = card.ability.extra.ForestRetriggers - 1
-            return {
-                message = "Rest in peace 3:"
-            }
-        end
+    --     if context.card_added then
+    --         if context.cardarea == G.jokers and (context.retrigger_joker == nil) then
+    --             return {
+    --                 message = "Welcome :3c"
+    --             }
+    --         end
+    --     end
+    --     if context.selling_card then
+    --         if context.cardarea == G.jokers and (context.retrigger_joker == nil) then
+    --             print(inspectDepth(self))
+    --             print(inspectDepth(context.card))
+    --             print(card == context.card)
+    --             return {
+    --                 message = "Rest in peace 3:"
+    --             }
+    --         end
+    --     end
     end,
 }
 
