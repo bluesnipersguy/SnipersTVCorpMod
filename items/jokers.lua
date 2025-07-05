@@ -9,7 +9,7 @@ SMODS.Joker{
     key = 'ForestJoker',
     loc_txt= {
         name = 'Forest',
-        text = {'For each {C:attention}Joker{} held in hand,',
+        text = {'For each {C:attention}Joker{},',
                 'retrigger all {C:attention}Jokers{} an extra time.',
                 'Currently retriggering: {C:attention}#1#{} extra time(s).',
                 '{C:inactive} My cute boyfriend! - bluesnipersguy{}',
@@ -28,44 +28,32 @@ SMODS.Joker{
     atlas = 'ForestJoker',
     config = { extra = { ForestRetriggers = 0, } },
     loc_vars = function(self, info_queue, center)
-        return { vars = {center.ability.extra.ForestRetriggers} }
+        return { vars = {#G.jokers.cards} }
     end,
     check_for_unlock = function(self)
         unlock_card(self)
     end,
-    add_to_deck = function (self, card, from_debuff)
-        self:calculate_retrigs(card)
-    end,
-    calculate_retrigs = function(self, card)
-        local count = 0
-        for _, j in ipairs(G.jokers.cards) do
-            local name = j.ability and j.ability.name
-                count = count + 1
-        end
-        card.ability.extra.ForestRetriggers = count
-    end,
     calculate = function(self, card, context)
-        if context.retrigger_joker_check and not context.retrigger_joker and not context.self then
-                return {
-                    repetitions = card.ability.extra.ForestRetriggers,
-                    message = "There ya go! :3c"
-                }
+        if context.retrigger_joker_check then
+            local name = context.other_card.ability and context.other_card.ability.name
+            return {
+                repetitions = #G.jokers.cards,
+                message = "There ya go! :3c"
+            }
         end
-        if not context.blueprint then    
-            if context.card_added then
-                card.ability.extra.ForestRetriggers = card.ability.extra.ForestRetriggers + 1
-                    return {
-                        message = "Welcome :3c"
-                    }
-                end
-            end        
-            if not context.blueprint then 
-            if context.selling_card then
-                    card.ability.extra.ForestRetriggers = card.ability.extra.ForestRetriggers - 1
-                    return {
-                        message = "Rest in peace 3:"
-                    }
-            end
+        if context.card_added then
+            local name = context.card.ability and context.card.ability.name
+            card.ability.extra.ForestRetriggers = card.ability.extra.ForestRetriggers + 1
+            return {
+                message = "Welcome :3c"
+            }
+        end
+        if context.selling_card then
+            local name = context.card.ability and context.card.ability.name
+            card.ability.extra.ForestRetriggers = card.ability.extra.ForestRetriggers - 1
+            return {
+                message = "Rest in peace 3:"
+            }
         end
     end,
 }
