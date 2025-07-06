@@ -10,8 +10,7 @@ if not SnipersTV then
 	SnipersTV = {}
 end
 
-local global = {}
-local mod_path = SMODS.current_mod.path
+local mod_path = "" .. SMODS.current_mod.path
 
 SnipersTV.path = mod_path
 SnipersTV_config = SMODS.current_mod.config
