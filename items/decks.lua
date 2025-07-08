@@ -195,7 +195,7 @@ SMODS.Back({
     loc_txt = {
         name = "Oyasumi Deck",
         text = {
-            "Start with {C:attention}MARIs Picnic{}",
+            "Start with {C:attention}MARI\'s Picnic{}",
             "and only have Spades in your deck",
         },
     },

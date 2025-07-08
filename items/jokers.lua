@@ -858,7 +858,8 @@ SMODS.Joker{ --Gamblecore
         end
     end
 }
-SMODS.Joker{ --1Eggs
+
+SMODS.Joker { --1Eggs
     name = "1Eggs",
     key = "_1eggs",
     config = {
@@ -878,6 +879,7 @@ SMODS.Joker{ --1Eggs
             [5] = '{C:inactive}collect my eggs{}'
         }
     },
+    pools = { ['SnipersTVAdditions'] = true },
     pos = {
         x = 0,
         y = 0
@@ -891,83 +893,84 @@ SMODS.Joker{ --1Eggs
     atlas = 'TinsCustomJokers',
 
     loc_vars = function(self, info_queue, card)
-        return {vars = {}}
+        return { vars = {} }
     end,
 
     calculate = function(self, card, context)
         if context.cardarea == G.jokers and context.joker_main then
             if (function()
-      for i = 1, #G.jokers.cards do
-          if G.jokers.cards[i].config.center.key == "j_egg" then
-              return true
-          end
-      end
-      return false
-  end)() then
+                    for i = 1, #G.jokers.cards do
+                        if G.jokers.cards[i].config.center.key == "j_egg" then
+                            return true
+                        end
+                    end
+                    return false
+                end)() then
                 return {
                     Xmult = card.ability.extra.Xmult
                 }
             end
         end
         if context.setting_blind and not context.blueprint then
-                return {
-                    func = function()
-                local my_pos = nil
-                for i = 1, #G.jokers.cards do
-                    if G.jokers.cards[i] == card then
-                        my_pos = i
-                        break
-                    end
-                end
-                local target_joker = nil
-                if my_pos and my_pos < #G.jokers.cards then
-                    local joker = G.jokers.cards[my_pos + 1]
-                    if not joker.ability.eternal and not joker.getting_sliced then
-                        target_joker = joker
-                    end
-                end
-                
-                if target_joker then
-                    target_joker.getting_sliced = true
-                    G.E_MANAGER:add_event(Event({
-                        func = function()
-                            target_joker:start_dissolve({G.C.RED}, nil, 1.6)
-                            return true
+            return {
+                func = function()
+                    local my_pos = nil
+                    for i = 1, #G.jokers.cards do
+                        if G.jokers.cards[i] == card then
+                            my_pos = i
+                            break
                         end
-                    }))
-                    card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = "Egged!", colour = G.C.RED})
-                end
+                    end
+                    local target_joker = nil
+                    if my_pos and my_pos < #G.jokers.cards then
+                        local joker = G.jokers.cards[my_pos + 1]
+                        if not joker.ability.eternal and not joker.getting_sliced then
+                            target_joker = joker
+                        end
+                    end
+
+                    if target_joker then
+                        target_joker.getting_sliced = true
+                        G.E_MANAGER:add_event(Event({
+                            func = function()
+                                target_joker:start_dissolve({ G.C.RED }, nil, 1.6)
+                                return true
+                            end
+                        }))
+                        card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil,
+                            { message = "Egged!", colour = G.C.RED })
+                    end
                     return true
                 end,
-                    extra = {
-                        func = function()
-            local created_joker = false
-                if #G.jokers.cards + G.GAME.joker_buffer < G.jokers.config.card_limit then
-                    created_joker = true
-                    G.GAME.joker_buffer = G.GAME.joker_buffer + 1
-                    G.E_MANAGER:add_event(Event({
-                        func = function()
-                            local joker_card = create_card('Joker', G.jokers, nil, nil, nil, nil, 'j_egg')
-                            joker_card:add_to_deck()
-                            G.jokers:emplace(joker_card)
-                            G.GAME.joker_buffer = 0
-                            return true
+                extra = {
+                    func = function()
+                        local created_joker = false
+                        if #G.jokers.cards + G.GAME.joker_buffer < G.jokers.config.card_limit then
+                            created_joker = true
+                            G.GAME.joker_buffer = G.GAME.joker_buffer + 1
+                            G.E_MANAGER:add_event(Event({
+                                func = function()
+                                    local joker_card = create_card('Joker', G.jokers, nil, nil, nil, nil, 'j_egg')
+                                    joker_card:add_to_deck()
+                                    G.jokers:emplace(joker_card)
+                                    G.GAME.joker_buffer = 0
+                                    return true
+                                end
+                            }))
                         end
-                    }))
-                end
-            if created_joker then
-                card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = localize('k_plus_joker'), colour = G.C.BLUE})
-            end
-            return true
-        end,
-                        colour = G.C.BLUE
-                        }
+                        if created_joker then
+                            card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, { message = localize('k_plus_joker'), colour = G.C.BLUE })
+                        end
+                        return true
+                    end,
+                    colour = G.C.BLUE
                 }
+            }
         end
     end
 }
 
-SMODS.Joker{ --Red and Blue Noobs
+SMODS.Joker { --Red and Blue Noobs
     name = "Red and Blue Noobs",
     key = "redandbluenoobs",
     config = {
@@ -975,6 +978,7 @@ SMODS.Joker{ --Red and Blue Noobs
             Xmult = 1.5
         }
     },
+    pools = { ['SnipersTVAdditions'] = true },
     loc_txt = {
         ['name'] = 'Red and Blue Noobs',
         ['text'] = {
@@ -996,8 +1000,12 @@ SMODS.Joker{ --Red and Blue Noobs
     discovered = true,
     atlas = 'TinsCustomJokers',
 
-        calculate = function(self, card, context)
-        if context.individual and context.cardarea == G.play and not context.blueprint then
+    loc_vars = function(self, info_queue, card)
+        return { vars = {} }
+    end,
+
+    calculate = function(self, card, context)
+        if context.individual and context.cardarea == G.play then
             if context.other_card:is_suit("Hearts") then
                 return {
                     Xmult = 1.5
@@ -1011,7 +1019,7 @@ SMODS.Joker{ --Red and Blue Noobs
     end
 }
 
-SMODS.Joker{ --MARIs Picnic
+SMODS.Joker { --MARIs Picnic
     name = "MARIs Picnic",
     key = "marispicnic",
     config = {
@@ -1021,13 +1029,14 @@ SMODS.Joker{ --MARIs Picnic
         }
     },
     loc_txt = {
-        ['name'] = 'MARIs Picnic',
+        ['name'] = 'MARI\'s Picnic',
         ['text'] = {
             [1] = 'Gives {C:blue}3 Hands{} and {C:red}3 Discards{}',
             [2] = 'when sold',
             [3] = '{C:inactive}All it costs is your love!{}'
         }
     },
+    pools = { ['SnipersTVAdditions'] = true },
     pos = {
         x = 2,
         y = 0
@@ -1041,94 +1050,99 @@ SMODS.Joker{ --MARIs Picnic
     atlas = 'TinsCustomJokers',
 
     loc_vars = function(self, info_queue, card)
-        return {vars = {}}
+        return { vars = {} }
     end,
 
     calculate = function(self, card, context)
         if context.selling_self and not context.blueprint then
-                return {
+            return {
+                func = function()
+                    card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil,
+                        { message = "+" .. tostring(card.ability.extra.hands) .. " Hand", colour = G.C.GREEN })
+                    G.GAME.current_round.hands_left = G.GAME.current_round.hands_left + card.ability.extra.hands
+                    play_sound('SnipersTV_marispicnicsell')
+                    return true
+                end,
+                extra = {
                     func = function()
-                card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = "+"..tostring(card.ability.extra.hands).." Hand", colour = G.C.GREEN})
-                G.GAME.current_round.hands_left = G.GAME.current_round.hands_left + card.ability.extra.hands
-				play_sound('SnipersTV_marispicnicsell')
-                return true
-            end,
+                        card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil,
+                            { message = "+" .. tostring(card.ability.extra.discards) .. " Discard", colour = G.C.ORANGE })
+                        G.GAME.current_round.discards_left = G.GAME.current_round.discards_left +
+                            card.ability.extra.discards
+                        return true
+                    end,
+                    colour = G.C.ORANGE,
                     extra = {
-                        func = function()
-                card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = "+"..tostring(card.ability.extra.discards).." Discard", colour = G.C.ORANGE})
-                G.GAME.current_round.discards_left = G.GAME.current_round.discards_left + card.ability.extra.discards
-                return true
-            end,
-                        colour = G.C.ORANGE,
-                        extra = {
-                            message = "You feel like new!",
-                            colour = G.C.WHITE
-                        }
-                        }
+                        message = "You feel like new!",
+                        colour = G.C.WHITE
+                    }
                 }
+            }
         end
     end
 }
-SMODS.Joker{
-	key = 'MafiosoJoker',
-	loc_txt = {
-		name = 'Mafioso',
-		text = {
-			'Prevents death',
-			'if chips scored is at least',
-			'{C:chips}50%{} of required chips',
-			'{C:red}Takes money when activated{}',
-			'{C:red}and does not work while in debt{}',
-			'{C:inactive}We are soldiers, and soldiers dont go to hell.{}'
-			}
-},
-	atlas = 'MafiosoJoker',
-	rarity = 3,
-	cost = 10,
-	unlocked = true,
-	discovered = true,
-	blueprint_compat = false,
-	eternal_compat = true,
-	perishable_compat = true,
-	pos = {x = 0, y = 0},
-	config = {extra = {
-		bankrupt_at = 20
-		}
-	},
-	loc_vars = function(self,info_queue,card)
-		return {vars = {card.ability.extra.bankrupt_at}}
-	end,
-    add_to_deck = function(self,card,from_debuff)
+SMODS.Joker {
+    key = 'MafiosoJoker',
+    loc_txt = {
+        name = 'Mafioso',
+        text = {
+            'Prevents death',
+            'if chips scored is at least',
+            '{C:chips}50%{} of required chips',
+            '{C:red}Takes money when activated{}',
+            '{C:red}and does not work while in debt{}',
+            '{C:inactive}We are soldiers, and soldiers don\'t go to hell.{}'
+        }
+    },
+    pools = { ['SnipersTVAdditions'] = true },
+    atlas = 'MafiosoJoker',
+    rarity = 3,
+    cost = 10,
+    unlocked = true,
+    discovered = true,
+    blueprint_compat = false,
+    eternal_compat = true,
+    perishable_compat = true,
+    pos = { x = 0, y = 0 },
+    config = { extra = {
+        bankrupt_at = 20
+    }
+    },
+    loc_vars = function(self, info_queue, card)
+        return { vars = { card.ability.extra.bankrupt_at } }
+    end,
+    add_to_deck = function(self, card, from_debuff)
         G.GAME.bankrupt_at = G.GAME.bankrupt_at - card.ability.extra.bankrupt_at
     end,
-    remove_from_deck = function(self,card,from_debuff)
+    remove_from_deck = function(self, card, from_debuff)
         G.GAME.bankrupt_at = G.GAME.bankrupt_at + card.ability.extra.bankrupt_at
     end,
-	calculate = function(self,card,context)
-		if context.end_of_round and context.game_over and context.main_eval then 
-		if to_big(G.GAME.chips) / to_big(G.GAME.blind.chips) >= to_big(0.50) and to_big(G.GAME.DOLLARS) >= to_big(0) then
-	G.E_MANAGER:add_event(Event({
-		func = function()
-			G.hand_text_area.blind_chips:juice_up()
-			G.hand_text_area.game_chips:juice_up()
-			play_sound('SnipersTV_youwontlivetoseethenextday')
-			ease_dollars(-20)
-			return true
-			end}))
-		else
-		play_sound('SnipersTV_justshutupandragequit')
-		return true
-		end
-	return {
-		message = localize('k_saved_ex'),
-		saved = 'ph_mafioso',
-		colour = G.C.RED
-		}
-	end
-end
+    calculate = function(self, card, context)
+        if context.end_of_round and context.game_over and context.main_eval then
+            if to_big(G.GAME.chips) / to_big(G.GAME.blind.chips) >= to_big(0.50) and to_big(G.GAME.DOLLARS) >= to_big(0) then
+                G.E_MANAGER:add_event(Event({
+                    func = function()
+                        G.hand_text_area.blind_chips:juice_up()
+                        G.hand_text_area.game_chips:juice_up()
+                        play_sound('SnipersTV_youwontlivetoseethenextday')
+                        ease_dollars(-20)
+                        return true
+                    end
+                }))
+            else
+                play_sound('SnipersTV_justshutupandragequit')
+                return true
+            end
+            return {
+                message = localize('k_saved_ex'),
+                saved = 'ph_mafioso',
+                colour = G.C.RED
+            }
+        end
+    end
 }
 
-SMODS.Joker{ --Evil Blueprint
+SMODS.Joker { --Evil Blueprint
     name = "Evil Blueprint",
     key = "evilblueprint",
     config = {
@@ -1141,13 +1155,14 @@ SMODS.Joker{ --Evil Blueprint
         ['name'] = 'Evil Blueprint',
         ['text'] = {
             [1] = 'Copies ability of {C:attention}Joker{} to the left',
-            [2] = 'There is a 1/5 chance where it doesn\'t copy',
-            [3] = 'After every round, there\'s a 1/10 chance',
+            [2] = 'There is a {C:attention}1/5{} chance where it doesn\'t copy',
+            [3] = 'After every round, there\'s a {C:attention}1/10{} chance',
             [4] = 'to forgive its sins and turn back into a',
             [5] = 'regular {C:attention}Blueprint{}',
-            [6] = '{C:inactive}Im feeling evil today...{}'
+            [6] = '{C:inactive}I\'m feeling evil today...{}'
         }
     },
+    pools = { ['SnipersTVAdditions'] = true },
     pos = {
         x = 0,
         y = 0
@@ -1159,21 +1174,57 @@ SMODS.Joker{ --Evil Blueprint
     unlocked = true,
     discovered = true,
     atlas = 'EvilBlueprint',
+    config = { extra = { odds = 5, odds2 = 10 } },
 
     loc_vars = function(self, info_queue, card)
-        return {vars = {}}
+        local other_joker
+        for i = 1, #G.jokers.cards do
+            if G.jokers.cards[i] == card then other_joker = G.jokers.cards[i - 1] end
+        end
+        local compatible = other_joker and other_joker ~= card and other_joker.config.center.blueprint_compat
+        main_end = (card.area and card.area == G.jokers) and {
+            {
+                n = G.UIT.C,
+                config = { align = "bm", minh = 0.4 },
+                nodes = {
+                    {
+                        n = G.UIT.C,
+                        config = { ref_table = card, align = "m", colour = compatible and mix_colours(G.C.GREEN, G.C.JOKER_GREY, 0.8) or mix_colours(G.C.RED, G.C.JOKER_GREY, 0.8), r = 0.05, padding = 0.06 },
+                        nodes = {
+                            { n = G.UIT.T, config = { text = ' ' .. localize('k_' .. (compatible and 'compatible' or 'incompatible')) .. ' ', colour = G.C.UI.TEXT_LIGHT, scale = 0.32 * 0.8 } },
+                        }
+                    }
+                }
+            }
+        } or nil
+        return {
+            main_end = main_end,
+            vars = { card.ability.extra.align, card.ability.extra.minh, card.ability.extra.odds, card.ability.extra.odds2 }
+        }
     end,
 
     calculate = function(self, card, context)
+        local other_joker = nil
+        for i = 1, #G.jokers.cards do
+            if G.jokers.cards[i] == card then other_joker = G.jokers.cards[i - 1] end
+        end
+        if pseudorandom('seed') < G.GAME.probabilities.normal / card.ability.extra.odds then
+        else
+            local other_joker = nil
+            for i = 1, #G.jokers.cards do
+                if G.jokers.cards[i] == card then other_joker = G.jokers.cards[i - 1] end
+            end
+            return SMODS.blueprint_effect(card, other_joker, context)
+        end
         if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint then
-                if pseudorandom('group_0_822e51db') < G.GAME.probabilities.normal / card.ability.extra.odds then
+            if pseudorandom('group_0_822e51db') < G.GAME.probabilities.normal / card.ability.extra.odds then
                         SMODS.calculate_effect({func = function()
                 card:start_dissolve()
                 return true
             end}, card)
-                        card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = "Forgiven!", colour = G.C.RED})
+                        card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = "Forgiven!", colour = G.C.BLUE})
                         SMODS.calculate_effect({func = function()
-						play_sound('SnipersTV_blueprintforgiven')
+                        play_sound('SnipersTV_blueprintforgiven')
             local created_joker = false
                 if #G.jokers.cards + G.GAME.joker_buffer < G.jokers.config.card_limit then
                     created_joker = true
@@ -1188,9 +1239,6 @@ SMODS.Joker{ --Evil Blueprint
                         end
                     }))
                 end
-            if created_joker then
-                card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = localize('k_plus_joker'), colour = G.C.BLUE})
-            end
             return true
         end}, card)
                     end
