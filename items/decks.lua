@@ -57,6 +57,11 @@ SMODS.Back({
 	check_for_unlock = function(self, args)
 		unlock_card(self)
 	end,
+	credits = {
+		art = { "bluesnipersguy" },
+		code = { "bluesnipersguy" },
+		idea = { "bluesnipersguy" },
+	},
 })
 SMODS.Atlas({
 	key = "DarkDeck",
@@ -105,6 +110,11 @@ SMODS.Back({
 			end,
 		}))
 	end,
+	credits = {
+		art = { "bluesnipersguy" },
+		code = { "bluesnipersguy" },
+		idea = { "bluesnipersguy" },
+	},
 })
 SMODS.Back({
 	key = "EggDeck",
@@ -135,6 +145,11 @@ SMODS.Back({
 			end,
 		}))
 	end,
+	credits = {
+		art = { "bluesnipersguy" },
+		code = { "bluesnipersguy" },
+		idea = { "bluesnipersguy" },
+	},
 })
 SMODS.Back({
 	key = "HoarderDeck",
@@ -157,6 +172,11 @@ SMODS.Back({
 	check_for_unlock = function(self, args)
 		unlock_card(self)
 	end,
+	credits = {
+		art = { "bluesnipersguy" },
+		code = { "bluesnipersguy" },
+		idea = { "bluesnipersguy" },
+	},
 })
 SMODS.Back({
 	key = "Utopia Deck",
@@ -188,6 +208,11 @@ SMODS.Back({
 	check_for_unlock = function(self, args)
 		unlock_card(self)
 	end,
+	credits = {
+		art = { "bluesnipersguy" },
+		code = { "colonthreeing" },
+		idea = { "bluesnipersguy" },
+	},
 })
 
 SMODS.Back({
@@ -229,8 +254,47 @@ SMODS.Back({
     check_for_unlock = function(self, args)
         unlock_card(self)
     end,
+	credits = {
+		art = { "Tinfoilbot65" },
+		code = { "Tinfoilbot65" },
+		idea = { "Tinfoilbot65" },
+	},
 })
+SMODS.Back({
+	key = 'DrunkenWizard',
+	loc_txt = {
+		name = "Drunken Wizard's Deck",
+		text = {
+			"All playing cards have a",
+			"{C:attention}Random{} Enchantment",
+			"{C:inactive}drunken wizardry - blue{}"
+		},
+	},
+	 apply = function()
+        G.E_MANAGER:add_event(Event({
+            func = function()
+                for i = #G.playing_cards, 1, -1 do
+                    G.playing_cards[i]:set_ability(
+                        G.P_CENTERS[SMODS.poll_enhancement({guaranteed = true})]
+                    )
+                end
+                return true
+            end
+        }))
+    end,
 
+	pos = { x = 0, y = 0 },
+	order = 1,
+	unlocked = true,
+	check_for_unlock = function(self, args)
+		unlock_card(self)
+	end,
+	credits = {
+		art = { "bluesnipersguy" },
+		code = { "colonthreeing" },
+		idea = { "bluesnipersguy" },
+	},
+})
 --[[ 
 NEXT DECK!
 Bonkers Deck!
