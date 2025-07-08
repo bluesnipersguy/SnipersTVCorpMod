@@ -429,7 +429,7 @@ SMODS.Joker{
 				chips = card.ability.extra.LandscapeChips,
 			}
 		end
-	end
+	end,
 	credits = {
 		art = { "Masked Man" },
 		code = { "bluesnipersguy" },
@@ -669,8 +669,8 @@ SMODS.Joker {
 				xmult = card.ability.extra.LongQuietXMult,
 			}
 		end
-    end
-		credits = {
+    end,
+    credits = {
 		art = { "colonthreeing" },
 		code = { "colonthreeing" },
 		idea = { "colonthreeing" },
@@ -774,7 +774,7 @@ SMODS.Joker{ --Gamblecore
     loc_txt = {
         ['name'] = 'Gamblecore',
         ['text'] = {
-            [1] = 'When blind is selected,
+            [1] = 'When blind is selected',
 			[2] = 'you will gain a random {C:attention}Joker{} of any rarity (must have room)',
             [3] = '25/50 chance for a {C:blue}Common{}',
             [4] = '14/50 chance for a {C:green}Uncommon{}',
@@ -1013,7 +1013,7 @@ SMODS.Joker { --1Eggs
                         }
                 }
         end
-    end
+    end,
 	credits = {
 		art = { "Tinfoilbot65" },
 		code = { "Tinfoilbot65" },
@@ -1067,7 +1067,7 @@ SMODS.Joker { --Red and Blue Noobs
                 }
             end
         end
-    end
+    end,
 	credits = {
 		art = { "Tinfoilbot65" },
 		code = { "Tinfoilbot65" },
@@ -1149,7 +1149,7 @@ SMODS.Joker {
 			'{C:red}and does not work while in debt{}',
             '{C:inactive}We are soldiers, and soldiers don\'t go to hell.{}'
 			}
-},
+    },
     pools = { ['SnipersTVAdditions'] = true },
 	atlas = 'MafiosoJoker',
 	rarity = 3,
@@ -1176,32 +1176,33 @@ SMODS.Joker {
     calculate = function(self, card, context)
 		if context.end_of_round and context.game_over and context.main_eval then 
 		if to_big(G.GAME.chips) / to_big(G.GAME.blind.chips) >= to_big(0.50) and to_big(G.GAME.DOLLARS) >= to_big(0) then
-	G.E_MANAGER:add_event(Event({
-		func = function()
-			G.hand_text_area.blind_chips:juice_up()
-			G.hand_text_area.game_chips:juice_up()
-			play_sound('SnipersTV_youwontlivetoseethenextday')
-			ease_dollars(-20)
-			return true
-                    end
-                }))
-		else
-		play_sound('SnipersTV_justshutupandragequit')
-		return true
-		end
-	return {
-		message = localize('k_saved_ex'),
-		saved = 'ph_mafioso',
-		colour = G.C.RED
-		}
-	end
-end
-credits = {
-		art = { "Tinfoilbot65" },
-		code = { "Tinfoilbot65" },
-		idea = { "Tinfoilbot65" },
-	},
+        G.E_MANAGER:add_event(Event({
+            func = function()
+                G.hand_text_area.blind_chips:juice_up()
+                G.hand_text_area.game_chips:juice_up()
+                play_sound('SnipersTV_youwontlivetoseethenextday')
+                ease_dollars(-20)
+                return true
+                        end
+                    }))
+            else
+            play_sound('SnipersTV_justshutupandragequit')
+            return true
+            end
+        return {
+            message = localize('k_saved_ex'),
+            saved = 'ph_mafioso',
+            colour = G.C.RED
+            }
+        end
+    end,
+    credits = {
+        art = { "Tinfoilbot65" },
+        code = { "Tinfoilbot65" },
+        idea = { "Tinfoilbot65" },
+    }
 }
+
 
 SMODS.Joker { --Evil Blueprint
 	name = "Evil Blueprint",
@@ -1222,7 +1223,7 @@ SMODS.Joker { --Evil Blueprint
             [5] = 'regular {C:attention}Blueprint{}',
             [6] = '{C:inactive}I\'m feeling evil today...{}'
         }
-		},
+    },
     pools = { ['SnipersTVAdditions'] = true },
 	pos = {
 		x = 0,
@@ -1239,9 +1240,10 @@ SMODS.Joker { --Evil Blueprint
 
 	loc_vars = function(self, info_queue, card)
         if G.jokers then
-        local other_joker
-        for i = 1, #G.jokers.cards do
-            if G.jokers.cards[i] == card then other_joker = G.jokers.cards[i - 1] end
+            local other_joker
+            for i = 1, #G.jokers.cards do
+                if G.jokers.cards[i] == card then other_joker = G.jokers.cards[i - 1] end
+            end
         end
         local compatible = other_joker and other_joker ~= card and other_joker.config.center.blueprint_compat
         main_end = (card.area and card.area == G.jokers) and {
@@ -1315,7 +1317,7 @@ SMODS.Joker { --Evil Blueprint
         end}, card)
 			end
 		end
-	end
+	end,
 	credits = {
 		art = { "Tinfoilbot65" },
 		code = { "Tinfoilbot65" },
