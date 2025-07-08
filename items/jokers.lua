@@ -1172,7 +1172,7 @@ SMODS.Joker{ --Evil Blueprint
     eternal_compat = true,
     unlocked = true,
     discovered = true,
-    atlas = 'Joker',
+    atlas = 'EvilBlueprint',
 
     loc_vars = function(self, info_queue, card)
         return {vars = {}}
