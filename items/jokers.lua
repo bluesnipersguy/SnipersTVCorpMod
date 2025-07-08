@@ -5,8 +5,8 @@ SMODS.Atlas{
     py = 96,
 }
 SMODS.Atlas({
-    key = "CustomJokers", 
-    path = "CustomJokers.png", 
+    key = "TinsCustomJokers", 
+    path = "TinsCustomJokers.png", 
     px = 71,
     py = 95, 
     atlas_table = "ASSET_ATLAS"
