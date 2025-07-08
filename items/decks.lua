@@ -210,7 +210,7 @@ SMODS.Back({
                 if G.jokers then
                     local card = SMODS.create_card({
                         set = "Joker",
-                        key = "j_tinsdumb_marispicnic",
+                        key = "j_SnipersTV_marispicnic",
                         area = G.jokers,
                     })
                     card:add_to_deck()
