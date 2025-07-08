@@ -20,6 +20,19 @@ SMODS.current_mod.optional_features = {
     retrigger_joker = true,
 }
 
+SMODS.Sound{
+	key = 'youwontlivetoseethenextday',
+	path = 'youwontlivetoseethenextday.ogg',
+}
+SMODS.Sound{
+	key = 'justshutupandragequit',
+	path = 'justshutupandragequit.ogg',
+}
+SMODS.Sound{
+	key = 'marispicnicsell',
+	path = 'marispicnicsell.ogg',
+}
+
 local files = NFS.getDirectoryItems(mod_path .. "items")
 
 for _, file in ipairs(files) do
