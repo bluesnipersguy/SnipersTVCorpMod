@@ -17,6 +17,12 @@ SMODS.Atlas{
     px = 71,
     py = 95
 }
+SMODS.Atlas{
+    key = 'EvilBlueprint', 
+    path = 'EvilBlueprint.png',
+    px = 71,
+    py = 95
+}
 SMODS.Sound{
 	key = 'youwontlivetoseethenextday',
 	path = 'youwontlivetoseethenextday.ogg',
@@ -28,6 +34,10 @@ SMODS.Sound{
 SMODS.Sound{
 	key = 'marispicnicsell',
 	path = 'marispicnicsell.ogg',
+}
+SMODS.Sound{
+	key = 'blueprintforgiven',
+	path = 'blueprintforgiven.ogg',
 }
 
 SMODS.Joker{
@@ -1130,6 +1140,73 @@ SMODS.Joker{
 		}
 	end
 end
+}
+
+SMODS.Joker{ --Evil Blueprint
+    name = "Evil Blueprint",
+    key = "evilblueprint",
+    config = {
+        extra = {
+            j_blueprint = 0,
+            odds = 6
+        }
+    },
+    loc_txt = {
+        ['name'] = 'Evil Blueprint',
+        ['text'] = {
+            [1] = 'Copies ability of {C:attention}Joker{} to the left',
+            [2] = 'There is a 1/5 chance where it doesn\'t copy',
+            [3] = 'After every round, there\'s a 1/10 chance',
+            [4] = 'to forgive its sins and turn back into a',
+            [5] = 'regular {C:attention}Blueprint{}',
+            [6] = '{C:inactive}Im feeling evil today...{}'
+        }
+    },
+    pos = {
+        x = 0,
+        y = 0
+    },
+    cost = 10,
+    rarity = 3,
+    blueprint_compat = false,
+    eternal_compat = true,
+    unlocked = true,
+    discovered = true,
+    atlas = 'EvilBlueprint',
+
+    loc_vars = function(self, info_queue, card)
+        return {vars = {}}
+    end,
+
+    calculate = function(self, card, context)
+        if context.end_of_round and context.game_over == false and context.main_eval and not context.blueprint then
+                if pseudorandom('group_0_822e51db') < G.GAME.probabilities.normal / card.ability.extra.odds then
+                        SMODS.calculate_effect({func = function()
+                card:start_dissolve()
+                return true
+            end}, card)
+                        card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = "Forgiven!", colour = G.C.BLUE})
+                        SMODS.calculate_effect({func = function()
+			play_sound('SnipersTV_blueprintforgiven')
+            local created_joker = false
+                if #G.jokers.cards + G.GAME.joker_buffer < G.jokers.config.card_limit then
+                    created_joker = true
+                    G.GAME.joker_buffer = G.GAME.joker_buffer + 1
+                    G.E_MANAGER:add_event(Event({
+                        func = function()
+                            local joker_card = create_card('Joker', G.jokers, nil, nil, nil, nil, 'j_blueprint')
+                            joker_card:add_to_deck()
+                            G.jokers:emplace(joker_card)
+                            G.GAME.joker_buffer = 0
+                            return true
+                        end
+                    }))
+                end
+            return true
+        end}, card)
+                    end
+        end
+    end
 }
 
 SMODS.Rarity:take_ownership("Common", {
