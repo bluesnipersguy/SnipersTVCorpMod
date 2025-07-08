@@ -385,7 +385,13 @@ SMODS.Joker {
                 }
             end
         end
-    end
+    end,
+
+	credits = {
+		art = { "colonthreeing" },
+		code = { "colonthreeing" },
+		idea = { "colonthreeing" }
+	}
 }
 SMODS.Joker {
     key = "Sugar",
