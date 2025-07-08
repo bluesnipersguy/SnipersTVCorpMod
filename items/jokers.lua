@@ -464,9 +464,9 @@ SMODS.Joker {
     end,
 
 	credits = {
-		art = { "colonthreeing" },
-		code = { "colonthreeing" },
-		idea = { "colonthreeing" }
+		art = "colonthreeing",
+		code = "colonthreeing",
+		idea = "colonthreeing"
 	}
 }
 SMODS.Joker {
