@@ -723,12 +723,13 @@ SMODS.Joker{ --Gamblecore
     loc_txt = {
         ['name'] = 'Gamblecore',
         ['text'] = {
-            [1] = 'When sold, you will gain a random {C:attention}Joker{} of any rarity (must have room)',
-            [2] = '25/50 chance for a {C:blue}Common{}',
-            [3] = '14/50 chance for a {C:green}Uncommon{}',
-            [4] = '10/50 chance for a {C:red}Rare{}',
-            [5] = '1/50 chance for a {C:tarot}Legendary{}',
-            [6] = '{C:inactive}Let\'s go gambling!{}'
+            [1] = 'When blind is selected,',
+            [2] = 'you will gain a random {C:attention}Joker{} of any rarity (must have room)',
+            [3] = '25/50 chance for a {C:blue}Common{}',
+            [4] = '14/50 chance for a {C:green}Uncommon{}',
+            [5] = '10/50 chance for a {C:red}Rare{}',
+            [6] = '1/50 chance for a {C:tarot}Legendary{}',
+            [7] = '{C:inactive}Let\'s go gambling!{}'
         }
     },
     pos = {
