@@ -201,6 +201,7 @@ SMODS.Back({
     },
 
 	atlas = "OyasumiDeck",
+	pos = { x = 0, y = 0 },
     order = 1,
     unlocked = true,
 
