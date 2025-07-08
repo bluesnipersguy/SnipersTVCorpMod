@@ -1148,7 +1148,7 @@ SMODS.Joker{ --Evil Blueprint
     config = {
         extra = {
             j_blueprint = 0,
-            odds = 6
+            odds = 10
         }
     },
     loc_txt = {
@@ -1172,7 +1172,7 @@ SMODS.Joker{ --Evil Blueprint
     eternal_compat = true,
     unlocked = true,
     discovered = true,
-    atlas = 'EvilBlueprint',
+    atlas = 'Joker',
 
     loc_vars = function(self, info_queue, card)
         return {vars = {}}
@@ -1185,9 +1185,9 @@ SMODS.Joker{ --Evil Blueprint
                 card:start_dissolve()
                 return true
             end}, card)
-                        card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = "Forgiven!", colour = G.C.BLUE})
+                        card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = "Forgiven!", colour = G.C.RED})
                         SMODS.calculate_effect({func = function()
-			play_sound('SnipersTV_blueprintforgiven')
+						play_sound('SnipersTV_blueprintforgiven')
             local created_joker = false
                 if #G.jokers.cards + G.GAME.joker_buffer < G.jokers.config.card_limit then
                     created_joker = true
@@ -1202,6 +1202,9 @@ SMODS.Joker{ --Evil Blueprint
                         end
                     }))
                 end
+            if created_joker then
+                card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = localize('k_plus_joker'), colour = G.C.BLUE})
+            end
             return true
         end}, card)
                     end
