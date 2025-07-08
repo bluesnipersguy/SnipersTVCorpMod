@@ -1135,8 +1135,8 @@ SMODS.Joker { --MARIs Picnic
                         }
                 }
         end
-    end
-        credits = {
+    end,
+    credits = {
         art = { "Tinfoilbot65" },
         code = { "Tinfoilbot65" },
         idea = { "Tinfoilbot65" },
