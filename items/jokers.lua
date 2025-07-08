@@ -1136,6 +1136,11 @@ SMODS.Joker { --MARIs Picnic
                 }
         end
     end
+        credits = {
+        art = { "Tinfoilbot65" },
+        code = { "Tinfoilbot65" },
+        idea = { "Tinfoilbot65" },
+    }
 }
 SMODS.Joker {
     key = 'MafiosoJoker',
@@ -1324,7 +1329,47 @@ SMODS.Joker { --Evil Blueprint
 		idea = { "Tinfoilbot65" },
 	},
 }
-
+SMODS.Joker {
+    name = "Steel Ticket",
+    key = "steelticket",
+    loc_txt = {
+    name = "Steel Ticket",
+    text = {
+        'Played {C:attention}Steel{} cards earn {X:red,C:white}2x{} when scored',
+        '{C:inactive}Man, the steel factory is plagarizing the design',
+        '{C:inactive}of the golden factory\'s tickets? So lame dude. - blue'
+    }
+},
+   pools = { ['SnipersTVAdditions'] = true },
+    pos = { x = 0, y = 0 },
+    atlas = "SteelTicket",
+    rarity = 2,
+    cost = 5,
+    unlocked = true,
+    discovered = true,
+    blueprint_compat = false,
+    eternal_compat = true,
+    perishable_compat = true,
+    loc_vars = function(self,info_queue, card)
+             info_queue[#info_queue + 1] = G.P_CENTERS.m_steel
+        return {{}}
+    end,
+    calculate = function(self, card, context)
+        if context.individual and context.cardarea == G.play and SMODS.has_enhancement(context.other_card, 'm_steel') then
+           card = card,
+           message == 'X' .. 2,
+           colour == G.C.MULT
+           return {
+            xmult = 2
+        }
+        end
+    end,
+        credits = {
+        art = { "Tinfoilbot65" },
+        code = { "Tinfoilbot65" },
+        idea = { "Shan" },
+    }
+}
 SMODS.Rarity:take_ownership("Common", {
 	key = "Common",
 	loc_txt = {},
