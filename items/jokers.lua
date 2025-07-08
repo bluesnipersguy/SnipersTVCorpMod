@@ -682,13 +682,13 @@ SMODS.Sound {
     key = 'gamblecorefail',
     path = 'gamblecorefail.ogg'
  }
- SMODS.Atlas{
-    key = 'GamblecoreJoker',
+SMODS.Atlas{
+    key = 'GamblecoreJoker', 
     path = 'GamblecoreJoker.png',
     px = 71,
     py = 95
 }
-SMODS.Joker{
+SMODS.Joker{ --Gamblecore
     name = "Gamblecore",
     key = "gamblecore",
     config = {
@@ -700,8 +700,7 @@ SMODS.Joker{
     loc_txt = {
         ['name'] = 'Gamblecore',
         ['text'] = {
-            [1] = 'When starting blind,',
-            [2] = 'you will gain a random {C:attention}Joker{} of any rarity (must have room)',
+            [1] = 'When sold, you will gain a random {C:attention}Joker{} of any rarity (must have room)',
             [2] = '25/50 chance for a {C:blue}Common{}',
             [3] = '14/50 chance for a {C:green}Uncommon{}',
             [4] = '10/50 chance for a {C:red}Rare{}',
@@ -721,6 +720,115 @@ SMODS.Joker{
     discovered = true,
     atlas = 'GamblecoreJoker',
 
+    loc_vars = function(self, info_queue, card)
+        return {vars = {}}
+    end,
+
+    calculate = function(self, card, context)
+        if context.setting_blind and not context.blueprint then
+                if pseudorandom('group_0_171c225a') < G.GAME.probabilities.normal / card.ability.extra.odds then
+                        SMODS.calculate_effect({func = function()
+            local created_joker = false
+                if #G.jokers.cards + G.GAME.joker_buffer < G.jokers.config.card_limit then
+                    created_joker = true
+                    G.GAME.joker_buffer = G.GAME.joker_buffer + 1
+                    G.E_MANAGER:add_event(Event({
+                        func = function()
+                            play_sound('SnipersTV_gamblecoresuccess')
+                            SMODS.add_card({
+                                set = 'Joker',
+                                rarity = 'Legendary',
+                                key_append = 'joker_forge_random'
+                            })
+                            G.GAME.joker_buffer = 0
+                            return true
+                        end
+                    }))
+                end
+            if created_joker then
+                card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = "I cant stop winning!", colour = G.C.BLUE})
+            end
+            return true
+        end}, card)
+                    end
+                if pseudorandom('group_1_7805fb97') < G.GAME.probabilities.normal * 25 / card.ability.extra.odds then
+                        SMODS.calculate_effect({func = function()
+            local created_joker = false
+                if #G.jokers.cards + G.GAME.joker_buffer < G.jokers.config.card_limit then
+                    created_joker = true
+                    G.GAME.joker_buffer = G.GAME.joker_buffer + 1
+                    G.E_MANAGER:add_event(Event({
+                        func = function()
+                            play_sound('SnipersTV_gamblecorefail')
+                            SMODS.add_card({
+                                set = 'Joker',
+                                rarity = 'Common',
+                                key_append = 'joker_forge_random'
+                            })
+                            G.GAME.joker_buffer = 0
+                            return true
+                        end
+                    }))
+                end
+            if created_joker then
+                card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = "Aw dangit!", colour = G.C.BLUE})
+            end
+            return true
+        end}, card)
+                    end
+                if pseudorandom('group_2_eeeebcbf') < G.GAME.probabilities.normal * 14 / card.ability.extra.odds then
+                        SMODS.calculate_effect({func = function()
+            local created_joker = false
+                if #G.jokers.cards + G.GAME.joker_buffer < G.jokers.config.card_limit then
+                    created_joker = true
+                    G.GAME.joker_buffer = G.GAME.joker_buffer + 1
+                    G.E_MANAGER:add_event(Event({
+                        func = function()
+                            
+                            SMODS.add_card({
+                                set = 'Joker',
+                                rarity = 'Uncommon',
+                                key_append = 'joker_forge_random'
+                            })
+                            G.GAME.joker_buffer = 0
+                            return true
+                        end
+                    }))
+                end
+            if created_joker then
+                card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = "Aw dangit!", colour = G.C.BLUE})
+            end
+            return true
+        end}, card)
+                    end
+                if pseudorandom('group_3_e4d9c421') < G.GAME.probabilities.normal * 10 / card.ability.extra.odds then
+                        SMODS.calculate_effect({func = function()
+            local created_joker = false
+                if #G.jokers.cards + G.GAME.joker_buffer < G.jokers.config.card_limit then
+                    created_joker = true
+                    G.GAME.joker_buffer = G.GAME.joker_buffer + 1
+                    G.E_MANAGER:add_event(Event({
+                        func = function()
+                            play_sound('SnipersTV_gamblecoresuccess')
+                            SMODS.add_card({
+                                set = 'Joker',
+                                rarity = 'Rare',
+                                key_append = 'joker_forge_random'
+                            })
+                            G.GAME.joker_buffer = 0
+                            return true
+                        end
+                    }))
+                end
+            if created_joker then
+                card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = "I cant stop winning!", colour = G.C.BLUE})
+            end
+            return true
+        end}, card)
+                    end
+        end
+    end
+}
 SMODS.Joker{ --1Eggs
     name = "1Eggs",
     key = "_1eggs",
