@@ -18,6 +18,12 @@ SMODS.Atlas{
     py = 95
 }
 SMODS.Atlas{
+    key = 'SteelTicket', 
+    path = 'SteelTicket.png',
+	px = 71,
+    py = 95
+}
+SMODS.Atlas{
     key = 'EvilBlueprint', 
     path = 'EvilBlueprint.png',
 	px = 71,
