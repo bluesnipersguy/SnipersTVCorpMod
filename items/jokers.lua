@@ -4,6 +4,19 @@ SMODS.Atlas{
     px = 69,
     py = 96,
 }
+SMODS.Atlas({
+    key = "CustomJokers", 
+    path = "CustomJokers.png", 
+    px = 71,
+    py = 95, 
+    atlas_table = "ASSET_ATLAS"
+}):register()
+SMODS.Atlas{
+    key = 'MafiosoJoker', 
+    path = 'MafiosoJoker.png',
+    px = 71,
+    py = 95
+}
 SMODS.Sound{
 	key = 'youwontlivetoseethenextday',
 	path = 'youwontlivetoseethenextday.ogg',
