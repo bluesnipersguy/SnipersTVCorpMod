@@ -295,6 +295,55 @@ SMODS.Back({
 		idea = { "bluesnipersguy" },
 	},
 })
+
+SMODS.Back({
+	key = "MoneymaxxingDeck",
+	loc_txt = {
+		name = "Moneymaxxing Deck",
+		text = {
+			"Start with {C:attention} Goated Temperance{}",
+			"and a {C:Blue}Negative{} {C:attention}Gift Card{}",
+		},
+	},
+
+	pos = { x = 0, y = 0},
+	order = 1,
+	unlocked = true,
+
+	apply = function(self)
+		G.E_MANAGER:add_event(Event({
+			func = function()
+				if G.jokers then
+					local card = SMODS.create_card({
+						set = "Joker",
+						key = "j_SnipersTV_Temperance2",
+						area = G.jokers,
+					})
+					card:add_to_deck()
+					G.jokers:emplace(card)
+					local card = SMODS.create_card({
+						set = "Joker",
+						key = "j_gift",
+						edition = "e_negative",
+						area = G.jokers,
+					})
+					card:add_to_deck()
+					G.jokers:emplace(card)
+				end
+				return true
+			end
+		}))
+	end,
+
+	check_for_unlock = function(self, args)
+		unlock_card(self)
+	end,
+		credits = {
+		art = { "N/A" },
+		code = { "Tinfoilbot65" },
+		idea = { "WPawnToE4" },
+	},
+})
 --[[ 
 NEXT DECK!
 Bonkers Deck!
@@ -302,11 +351,4 @@ A Combination of Magic, Nebula, Zodiac, Ghost, Anaglyph, Abandonded, Erratic, an
 Benefits:
 too long to write rn
 (Credit to MaskedMan)
-]]
---[[
-NEXT NEXT DECK!
-Moneymaxxing Deck!
-Start with 1 Goated Temperance
-and A negative Gift Card.
-(Credit to WPawnToE4)
 ]]
