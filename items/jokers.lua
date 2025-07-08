@@ -1070,7 +1070,7 @@ SMODS.Joker{ --MARIs Picnic
                     func = function()
                 card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {message = "+"..tostring(card.ability.extra.hands).." Hand", colour = G.C.GREEN})
                 G.GAME.current_round.hands_left = G.GAME.current_round.hands_left + card.ability.extra.hands
-				play_sound('tinsdumb_marispicnicsell')
+				play_sound('SnipersTV_marispicnicsell')
                 return true
             end,
                     extra = {
