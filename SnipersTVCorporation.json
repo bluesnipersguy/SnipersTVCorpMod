@@ -7,7 +7,7 @@
 	"prefix": "SnipersTV",
 	"main_file": "main.lua",
 	"priority": 0,
-	"badge_colour": "6abe30",
+	"badge_colour": "0094FF",
 	"badge_text_colour": "FFFFFF",
 	"version": "0.10",
 	"dependencies": [
