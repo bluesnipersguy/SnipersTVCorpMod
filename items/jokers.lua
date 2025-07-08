@@ -1073,18 +1073,6 @@ SMODS.Joker{ --MARIs Picnic
         end
     end
 }
-SMODS.Sound{
-	key = 'youwontlivetoseethenextday',
-	path = 'youwontlivetoseethenextday.ogg',
-}
-SMODS.Sound{
-	key = 'justshutupandragequit',
-	path = 'justshutupandragequit.ogg',
-}
-SMODS.Sound{
-	key = 'marispicnicsell',
-	path = 'marispicnicsell.ogg',
-}
 SMODS.Joker{
 	key = 'MafiosoJoker',
 	loc_txt = {
@@ -1102,7 +1090,7 @@ SMODS.Joker{
 	rarity = 3,
 	cost = 10,
 	unlocked = true,
-	discovered = false,
+	discovered = true,
 	blueprint_compat = false,
 	eternal_compat = true,
 	perishable_compat = true,
