@@ -996,35 +996,15 @@ SMODS.Joker{ --Red and Blue Noobs
     discovered = true,
     atlas = 'TinsCustomJokers',
 
-    loc_vars = function(self, info_queue, card)
-        return {vars = {}}
-    end,
-
-    calculate = function(self, card, context)
-        if context.cardarea == G.jokers and context.joker_main then
-            if ((function()
-    local suitFound = false
-    for i, c in ipairs(context.scoring_hand) do
-        if c:is_suit("Hearts") then
-            suitFound = true
-            break
-        end
-    end
-    
-    return suitFound
-end)() and (function()
-    local suitFound = false
-    for i, c in ipairs(context.scoring_hand) do
-        if c:is_suit("Clubs") then
-            suitFound = true
-            break
-        end
-    end
-    
-    return suitFound
-end)()) then
+        calculate = function(self, card, context)
+        if context.individual and context.cardarea == G.play and not context.blueprint then
+            if context.other_card:is_suit("Hearts") then
                 return {
-                    Xmult = card.ability.extra.Xmult
+                    Xmult = 1.5
+                }
+            elseif context.other_card:is_suit("Clubs") then
+                return {
+                    Xmult = 1.5
                 }
             end
         end
