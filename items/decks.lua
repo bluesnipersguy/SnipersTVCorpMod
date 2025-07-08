@@ -4,6 +4,13 @@ SMODS.Atlas({
 	px = 69,
 	py = 93,
 })
+SMODS.Atlas({
+	key = "OyasumiDeck",
+	path = "OyasumiDeck.png",
+	px = 69,
+	py = 93,
+})
+
 SMODS.Back({
 	key = "ForestDeck",
 	loc_txt = {
@@ -182,6 +189,47 @@ SMODS.Back({
 		unlock_card(self)
 	end,
 })
+
+SMODS.Back({
+    key = "OyasumiDeck",
+    loc_txt = {
+        name = "Oyasumi Deck",
+        text = {
+            "Start with {C:attention}MARIs Picnic{}",
+            "and only have Spades in your deck",
+        },
+    },
+
+	atlas = "OyasumiDeck",
+    order = 1,
+    unlocked = true,
+
+    apply = function(self)
+        G.E_MANAGER:add_event(Event({
+            func = function()
+                if G.jokers then
+                    local card = SMODS.create_card({
+                        set = "Joker",
+                        key = "j_tinsdumb_marispicnic",
+                        area = G.jokers,
+                    })
+                    card:add_to_deck()
+                    G.jokers:emplace(card)
+                end
+                for k, v in pairs(G.playing_cards) do
+                        if not v:is_suit("Spades") then
+                            v:start_dissolve()
+                        end
+                    end
+                return true
+            end}))
+    end,
+
+    check_for_unlock = function(self, args)
+        unlock_card(self)
+    end,
+})
+
 --[[ 
 NEXT DECK!
 Bonkers Deck!
