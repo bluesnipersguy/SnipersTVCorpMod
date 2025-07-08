@@ -1262,8 +1262,8 @@ SMODS.Joker{
 			end
 		end
 	end,
-})
-SMODS.Joker({ --1Eggs
+}
+SMODS.Joker{ --1Eggs
 	name = "1Eggs",
 	key = "_1eggs",
 	config = {
