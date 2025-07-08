@@ -4,6 +4,18 @@ SMODS.Atlas{
     px = 69,
     py = 96,
 }
+SMODS.Sound{
+	key = 'youwontlivetoseethenextday',
+	path = 'youwontlivetoseethenextday.ogg',
+}
+SMODS.Sound{
+	key = 'justshutupandragequit',
+	path = 'justshutupandragequit.ogg',
+}
+SMODS.Sound{
+	key = 'marispicnicsell',
+	path = 'marispicnicsell.ogg',
+}
 
 SMODS.Joker{
     key = 'ForestJoker',
