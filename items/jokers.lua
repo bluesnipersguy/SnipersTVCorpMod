@@ -1466,13 +1466,6 @@ Rarity: Rare
 For each selected blind, gain X0.5mult and increse gain by 2 dollars.
 Starts out at 1X and 2 dollars.
 Obscures all vital information until sold.
-
-]]
---[[
-Goated Temperance
-For each dollar in all combined Joker sell value.
-This Joker gains X1.1 mult.
-(Credit to WPawnToE4)
 ]]
 --[[
 Shigesato Itoi Joker: 
@@ -1492,11 +1485,5 @@ gain
 5 mult 
 2x chips
 5 chips
-(Credit to Shan)
-]]
---[[
-Steel Ticket
-Each scored steel card gives 2X mult.
-(kinda goated)
 (Credit to Shan)
 ]]
