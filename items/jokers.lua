@@ -1177,6 +1177,7 @@ SMODS.Joker { --Evil Blueprint
     config = { extra = { odds = 5, odds2 = 10 } },
 
     loc_vars = function(self, info_queue, card)
+        if G.jokers then
         local other_joker
         for i = 1, #G.jokers.cards do
             if G.jokers.cards[i] == card then other_joker = G.jokers.cards[i - 1] end
