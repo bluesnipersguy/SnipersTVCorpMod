@@ -303,7 +303,7 @@ SMODS.Back({
 		text = {
 			"Start with {C:attention} Goated Temperance{}",
 			"and a {C:inactive}Negative{} {C:attention}Gift Card{}",
-			"All playing cards are {C:attention}Gold{}."
+			"All playing cards are {C:attention}Gold{}.",
 			"{C:inactive}Mr. Krabs would be proud... - blue{}"
 		},
 	},
