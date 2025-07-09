@@ -302,7 +302,9 @@ SMODS.Back({
 		name = "Moneymaxxing Deck",
 		text = {
 			"Start with {C:attention} Goated Temperance{}",
-			"and a {C:Blue}Negative{} {C:attention}Gift Card{}",
+			"and a {C:inactive}Negative{} {C:attention}Gift Card{}",
+			"All playing cards are {C:attention}Gold{}."
+			"{C:inactive}Mr. Krabs would be proud... - blue{}"
 		},
 	},
 
@@ -329,12 +331,14 @@ SMODS.Back({
 					})
 					card:add_to_deck()
 					G.jokers:emplace(card)
+					 for i = #G.playing_cards, 1, -1 do
+                    G.playing_cards[i]:set_ability(G.P_CENTERS.m_gold)
+                	end
 				end
 				return true
 			end
 		}))
 	end,
-
 	check_for_unlock = function(self, args)
 		unlock_card(self)
 	end,
