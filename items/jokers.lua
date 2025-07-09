@@ -1216,42 +1216,42 @@ SMODS.Joker {
 
 
 SMODS.Joker { --Evil Blueprint
-	name = "Evil Blueprint",
-	key = "evilblueprint",
-	config = {
-		extra = {
-			j_blueprint = 0,
-            odds = 10
+    name = "Evil Blueprint",
+    key = "evilblueprint",
+    config = {
+        extra = {
+            j_blueprint = 0,
+            odds = 5,
+            odds2 = 10
         }
-	},
-	loc_txt = {
+    },
+    loc_txt = {
         ['name'] = 'Evil Blueprint',
         ['text'] = {
             [1] = 'Copies ability of {C:attention}Joker{} to the left',
-            [2] = 'There is a {C:attention}1/5{} chance where it doesn\'t copy',
-            [3] = 'After every round, there\'s a {C:attention}1/10{} chance',
+            [2] = 'There is a {C:green}#1# in #2#{} chance where it doesn\'t copy',
+            [3] = 'After every round, there\'s a {C:green}#1# in #3#{} chance',
             [4] = 'to forgive its sins and turn back into a',
             [5] = 'regular {C:attention}Blueprint{}',
             [6] = '{C:inactive}I\'m feeling evil today...{}'
         }
     },
     pools = { ['SnipersTVAdditions'] = true },
-	pos = {
-		x = 0,
+    pos = {
+        x = 0,
         y = 0
-	},
-	cost = 10,
-	rarity = 3,
-	blueprint_compat = false,
-	eternal_compat = true,
-	unlocked = true,
-	discovered = true,
+    },
+    cost = 10,
+    rarity = 3,
+    blueprint_compat = false,
+    eternal_compat = true,
+    unlocked = true,
+    discovered = true,
     atlas = 'EvilBlueprint',
-    config = { extra = { odds = 5, odds2 = 10 } },
 
-	loc_vars = function(self, info_queue, card)
+    loc_vars = function(self, info_queue, card)
+    local other_joker
         if G.jokers then
-            local other_joker
             for i = 1, #G.jokers.cards do
                 if G.jokers.cards[i] == card then other_joker = G.jokers.cards[i - 1] end
             end
@@ -1274,9 +1274,9 @@ SMODS.Joker { --Evil Blueprint
         } or nil
         return {
             main_end = main_end,
-            vars = { card.ability.extra.align, card.ability.extra.minh, card.ability.extra.odds, card.ability.extra.odds2 }
+            vars = { G.GAME and G.GAME.probabilities.normal or 1, card.ability.extra.odds, card.ability.extra.odds2 }
         }
-	end,
+    end,
 
 	calculate = function(self, card, context)
         local other_joker = nil
