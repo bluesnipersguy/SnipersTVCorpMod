@@ -576,8 +576,8 @@ SMODS.Joker {
 	loc_txt = {
 		name = "Gamma",
 		text = {
-			"For each scored {C:attention}Queens{},",
-			"gain {C:attention}+1{} additional retrigger on scored queen cards.",
+			"For each scored {C:attention}Queen{},",
+			"gain {C:attention}1{} additional retrigger on scored queen cards.",
             "{C:inactive}Current retriggers: {C:attention}#1#{}.",
             "{C:inactive}Did you know she was entirely designed to run Doom '93 and that's it? - Sugar{}",
             "{C:inactive}Notably combos well with Sugar... Wonder why... - blue{}"
@@ -603,12 +603,14 @@ SMODS.Joker {
     calculate = function (self, card, context)
 		if context.individual and context.cardarea == G.play and context.other_card:get_id() == 12 then
 			card.ability.extra.gammaRepetitions = card.ability.extra.gammaRepetitions + 1
-			return {
-				message = ":3c (+1 Repetition)",
+		elseif context.repetition and context.cardarea == G.play and context.other_card:get_id() == 12 then
+            return {
+                repetitions = card.ability.extra.gammaRepetitions,
+                message = ":3c (+1 Repetition)",
 				colour = G.C.MONEY,
-				repetitions = card.ability.extra.gammaRepetitions
-			}
-		end
+
+            }
+        end
 	end,
      credits = {
 		art = "Gamma",
