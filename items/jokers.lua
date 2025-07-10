@@ -514,7 +514,7 @@ SMODS.Joker {
 			"For each {C:attention}Queen{} successfully scored, this joker gains {X:mult,C:white}X1{} Mult{}.",
 			"Unleash {X:mult,C:white}XMult{}. on scored {C:attention}Queen{} cards.",
             '{C:inactive}Currently applying: {X:mult,C:white}X#1#{} Mult{}.',
-            '{C:inactive}IS THAT {C:legendary}SOURCHAOSCANDY{} FROM THE HIT SERVICE TWITCH? - blue{}'
+            '{C:inactive}IS THAT {C:legendary}SOURCHAOSCANDY{}{}{C:inactive}FROM THE HIT SERVICE TWITCH?{} - blue{}'
         }
 	},
 	pools = { ["SnipersTVAdditions"] = true },
@@ -565,6 +565,56 @@ SMODS.Joker {
 			}
 		end
 	end,
+    credits = {
+		art = "Sugar",
+		code = "bluesnipersguy",
+		idea = "Sugar"
+	}
+}
+SMODS.Joker {
+	key = "Gamma",
+	loc_txt = {
+		name = "Gamma",
+		text = {
+			"For each scored {C:attention}Queens{},",
+			"gain {C:attention}+1{} additional retrigger on scored queen cards.",
+            "{C:inactive}Current retriggers: {C:attention}#1#{}.",
+            "{C:inactive}Did you know she was entirely designed to run Doom '93 and that's it? - Sugar{}",
+            "{C:inactive}Notably combos well with Sugar... Wonder why... - blue{}"
+        }
+	},
+	pools = { ["SnipersTVAdditions"] = true },
+	pos = { x = 0, y = 0 },
+	loc_vars = function(self, info_queue, card)
+        return { vars = { card.ability.extra.gammaRepetitions, } }
+	end,
+	cost = 32,
+	rarity = 4,
+    config = { extra = { gammaRepetitions = 0, } },
+	unlocked = true,
+	discovered = true,
+	blueprint_compat = true,
+	eternal_compat = true,
+	perishable_compat = true,
+	check_for_unlock = function(self)
+		unlock_card(self)
+	end,
+
+    calculate = function (self, card, context)
+		if context.individual and context.cardarea == G.play and context.other_card:get_id() == 12 then
+			card.ability.extra.gammaRepetitions = card.ability.extra.gammaRepetitions + 1
+			return {
+				message = ":3c (+1 Repetition)",
+				colour = G.C.MONEY,
+				repetitions = card.ability.extra.gammaRepetitions
+			}
+		end
+	end,
+     credits = {
+		art = "Gamma",
+		code = "bluesnipersguy",
+		idea = "bluesnipersguy"
+	}
 }
 SMODS.Joker {
     key = 'Temperance2',
@@ -1243,7 +1293,7 @@ SMODS.Joker { --Evil Blueprint
     },
     cost = 8,
     rarity = 3,
-    blueprint_compat = false,
+    blueprint_compat = true,
     eternal_compat = true,
     unlocked = true,
     discovered = true,
