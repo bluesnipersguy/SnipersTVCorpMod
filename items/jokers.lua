@@ -29,6 +29,12 @@ SMODS.Atlas{
 	px = 71,
     py = 95
 }
+SMODS.Atlas {
+    key = 'OMORIJoker',
+    path = 'OMORIJoker.png',
+    px = 71,
+    py = 95
+}
 SMODS.Sound{
 	key = 'youwontlivetoseethenextday',
 	path = 'youwontlivetoseethenextday.ogg',
@@ -44,6 +50,10 @@ SMODS.Sound{
 SMODS.Sound{
 	key = 'blueprintforgiven',
 	path = 'blueprintforgiven.ogg',
+}
+SMODS.Sound {
+    key = 'omorisuccumb',
+    path = 'omorisuccumb.ogg',
 }
 
 SMODS.Joker{
@@ -1428,6 +1438,73 @@ SMODS.Joker {
         idea = { "Shan" },
     }
 }
+
+SMODS.Joker { -- OMORI
+    name = "OMORI",
+    key = "omori",
+    loc_txt = {
+        name = "OMORI",
+        text = {
+            'Whenever you first run out of hands in a round',
+            'adds one more hand',
+            '{X:money,C:white}#4#{}',
+            '{C:inactive}Your friends will never forgive you.',
+        }
+    },
+    pools = { ['SnipersTVAdditions'] = true },
+    atlas = 'OMORIJoker',
+    pos = { x = 0, y = 0 },
+    rarity = 2,
+    cost = 5,
+    unlocked = true,
+    discovered = true,
+    blueprint_compat = true,
+    eternal_compat = true,
+    perishable_compat = true,
+    config = {
+        extra = {
+            hands_remaining = 0,
+            hands = 1,
+            active = true,
+            text = 'Active!',
+        },
+    },
+    loc_vars = function(self, info_queue, card)
+        return {
+            vars = {
+                card.ability.extra.hands_remaining, card.ability.extra.hands, card.ability.extra.active, card.ability.extra.text
+            },
+        }
+    end,
+    calculate = function(self, card, context)
+        if context.joker_main and G.GAME.current_round.hands_left == 0 and card.ability.extra.active == true or context.forcetrigger
+        then
+            return {
+                func = function()
+                    card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil,
+                        { message = "OMORI didn\'t succumb.", colour = G.C.BLACK })
+                    G.GAME.current_round.hands_left = G.GAME.current_round.hands_left + card.ability.extra.hands
+                    play_sound('SnipersTV_omorisuccumb')
+                    card.ability.extra.active = false
+                    card.ability.extra.text = localize("k_inactive_ex")
+                    return true
+                end
+            }
+        end
+        if context.end_of_round and card.ability.extra.active == false and context.main_eval and not context.retrigger_joker and not context.blueprint then
+            card.ability.extra.active = true
+            card.ability.extra.text = localize("k_active_ex")
+                    card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil,
+                        { message = "Active!", colour = G.C.RED })
+        end
+    end,
+    credits = {
+        art = { "Tinfoilbot65" },
+        code = { "Tinfoilbot65" },
+        idea = { "Tinfoilbot65" },
+    }
+}
+
 SMODS.Rarity:take_ownership("Common", {
 	key = "Common",
 	loc_txt = {},

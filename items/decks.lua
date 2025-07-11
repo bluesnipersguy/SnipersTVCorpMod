@@ -221,7 +221,8 @@ SMODS.Back({
         name = "Oyasumi Deck",
         text = {
             "Start with {C:attention}MARI\'s Picnic{}",
-            "and only have Spades in your deck",
+			"and a {C:inactive}Negative{} {C:attention}OMORI{}",
+            "You only have Spades in your deck",
         },
     },
 
@@ -241,6 +242,14 @@ SMODS.Back({
                     })
                     card:add_to_deck()
                     G.jokers:emplace(card)
+					local card = SMODS.create_card({
+						set = "Joker",
+						key = "j_SnipersTV_omori",
+						edition = "e_negative",
+						area = G.jokers,
+					})
+					card:add_to_deck()
+					G.jokers:emplace(card)
                 end
                 for k, v in pairs(G.playing_cards) do
                         if not v:is_suit("Spades") then
@@ -260,6 +269,7 @@ SMODS.Back({
 		idea = { "Tinfoilbot65" },
 	},
 })
+
 SMODS.Back({
 	key = 'DrunkenWizard',
 	loc_txt = {
