@@ -221,7 +221,7 @@ SMODS.Back({
         name = "Oyasumi Deck",
         text = {
             "Start with {C:attention}MARI\'s Picnic{}",
-			"and a {C:inactive}Negative{} {C:attention}OMORI{}",
+	    "and a {C:inactive}Negative{} {C:attention}OMORI{}",
             "You only have Spades in your deck",
         },
     },
