@@ -465,8 +465,8 @@ SMODS.Joker {
 	loc_txt = {
 		name = "Estradiol",
 		text = {
-			"Turns all played {C:attention}Kings{} and {C:attention}Jacks{}",
-			"into {C:attention}Queens{}.",
+			"All scored {C:attention}Kings{} and {C:attention}Jacks{}",
+			"become {C:attention}Queens{}.",
             "{C:inactive}is this celeste from the hit game celeste? - blue{}"
         }
 	},
