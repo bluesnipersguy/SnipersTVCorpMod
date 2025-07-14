@@ -1504,6 +1504,52 @@ SMODS.Joker { -- OMORI
         idea = { "Tinfoilbot65" },
     }
 }
+SMODS.Atlas{
+    key = 'controlsystem', 
+    path = 'BorealisEngineJoker.png',
+	px = 71,
+    py = 95
+}
+SMODS.Joker { -- Control System
+    name = "Control System",
+    key = "controlsystem",
+    config = { extra = { Xmult = 4, type = "Two Pair" } },
+    pools = { ['SnipersTVAdditions'] = true },
+    loc_txt = {
+        ['name'] = 'Control System',
+        ['text'] = {
+        '{X:mult,C:white}X4{} Mult,', 
+        'If played hand contains a:',
+        '{C:attention}Two Pair{}.',
+        '{C:inactive}solve my puzzles{}'
+        }
+    },
+    pos = { x = 0, y = 0 },
+    cost = 10,
+    rarity = 3,
+    blueprint_compat = true,
+    eternal_compat = true,
+    unlocked = true,
+    discovered = true,
+    atlas = 'controlsystem',
+
+    loc_vars = function(self, info_queue, card)
+        return { vars = {} }
+    end,
+
+    calculate = function(self, card, context)
+        if context.joker_main and next(context.poker_hands[card.ability.extra.type]) then
+                return {
+                    Xmult = card.ability.extra.Xmult
+                }
+            end
+    end,
+	credits = {
+		art = { "AstraX2" },
+		code = { "bluesnipersguy" },
+		idea = { "AstraX2" },
+	},
+}
 
 SMODS.Rarity:take_ownership("Common", {
 	key = "Common",
