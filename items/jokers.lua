@@ -1550,7 +1550,70 @@ SMODS.Joker { -- Control System
 		idea = { "AstraX2" },
 	},
 }
-
+SMODS.Joker { -- Parapsychology
+    name = "Parapsychologist",
+    key = "Parapsychologist",
+    pools = { ['SnipersTVAdditions'] = true },
+    loc_txt = {
+        ['name'] = 'Parapsychologist',
+        ['text'] = {
+        'All {C:spectral}Spectral{} cards and', 
+        '{C:spectral}Spectral Packs{} can',
+        'appear in shop and are {C:attention}free{}',
+        '{C:inactive}spectral cards are cool - blue{}'
+        },
+        ['unlock'] = {
+        'Discover every',
+        '{C:spectral}Spectral{} card',
+        },
+    },
+    pos = { x = 0, y = 0 },
+    config = { extra = { spectral_rate = 2, } },
+    unlock_condition = { type = 'discover_amount',
+        spectral_count = 18 },
+    cost = 8,
+    rarity = 2,
+    blueprint_compat = false,
+    eternal_compat = true,
+    unlocked = false,
+    discovered = false,
+  add_to_deck = function(self, card, from_debuff)
+     G.GAME.spectral_rate = self.config.extra.spectral_rate    
+        G.E_MANAGER:add_event(Event({
+            func = function()
+                for k, v in pairs(G.I.CARD) do
+                    if v.set_cost then v:set_cost() end
+                end
+                return true
+            end
+        }))
+    end,
+    remove_from_deck = function(self, card, from_debuff)
+        G.GAME.spectral_rate = 0
+        G.E_MANAGER:add_event(Event({
+            func = function()
+                for k, v in pairs(G.I.CARD) do
+                    if v.set_cost then v:set_cost() end
+                end
+                return true
+            end
+        }))
+    end,
+    credits = {
+		art = { "N/A" },
+		code = { "bluesnipersguy" },
+		idea = { "bluesnipersguy" },
+	},
+}
+local card_set_cost_ref = Card.set_cost
+function Card:set_cost()
+    card_set_cost_ref(self)
+    if next(SMODS.find_card("j_SnipersTV_Parapsychologist")) then
+        if (self.ability.set == 'Spectral' or (self.ability.set == 'Booster' and self.config.center.kind == 'Spectral')) then self.cost = 0 end
+        self.sell_cost = math.max(1, math.floor(self.cost / 2)) + (self.ability.extra_value or 0)
+        self.sell_cost_label = self.facing == 'back' and '?' or self.sell_cost
+    end
+end
 SMODS.Rarity:take_ownership("Common", {
 	key = "Common",
 	loc_txt = {},
