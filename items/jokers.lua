@@ -35,6 +35,12 @@ SMODS.Atlas {
     px = 71,
     py = 95
 }
+SMODS.Atlas {
+    key = 'DrRobotnikJoker',
+    path = 'DrRobotnikJoker.png',
+    px = 71,
+    py = 95
+}
 SMODS.Sound{
 	key = 'youwontlivetoseethenextday',
 	path = 'youwontlivetoseethenextday.ogg',
@@ -54,6 +60,10 @@ SMODS.Sound{
 SMODS.Sound {
     key = 'omorisuccumb',
     path = 'omorisuccumb.ogg',
+}
+SMODS.Sound {
+    key = 'snooping',
+    path = 'snooping.ogg',
 }
 
 SMODS.Joker{
@@ -1614,6 +1624,66 @@ function Card:set_cost()
         self.sell_cost_label = self.facing == 'back' and '?' or self.sell_cost
     end
 end
+
+SMODS.Joker { -- Dr. Robotnik
+    name = "Dr. Robotnik",
+    key = "drrobotnik",
+    loc_txt = {
+        name = "Dr. Robotnik",
+        text = {
+            "Played {C:attention}face cards{} that are played",
+            "are turned into {C:attention}Steel Cards{}",
+            "{C:inactive}Snooping as usual I see!{}",
+        }
+    },
+    pools = { ['SnipersTVAdditions'] = true },
+    atlas = 'DrRobotnikJoker',
+    pos = { x = 0, y = 0 },
+    rarity = 3,
+    cost = 8,
+    unlocked = true,
+    discovered = true,
+    blueprint_compat = false,
+    eternal_compat = true,
+    perishable_compat = true,
+    loc_vars = function(self, info_queue, card)
+        info_queue[#info_queue + 1] = G.P_CENTERS.m_steel
+    end,
+    calculate = function(self, card, context)
+        if context.before and context.main_eval and not context.blueprint then
+            local faces = 0
+            for _, scored_card in ipairs(context.scoring_hand) do
+                if scored_card:is_face() then
+                    faces = faces + 1
+                    scored_card:set_ability('m_steel', nil, true)
+                    G.E_MANAGER:add_event(Event({
+                        func = function()
+                            scored_card:juice_up()
+                            return true
+                        end
+                    }))
+                end
+            end
+            if faces > 0 then
+                return {
+                    card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil,
+                        { message = "Steel", colour = G.C.MULT })
+                }
+            end
+        end
+    end,
+    add_to_deck = function(self, card, from_debuff)
+        if not from_debuff then
+            play_sound('SnipersTV_snooping')
+        end
+    end,
+    credits = {
+        art = { "Tinfoilbot65" },
+        code = { "Tinfoilbot65" },
+        idea = { "Tinfoilbot65" },
+    }
+}
+
 SMODS.Rarity:take_ownership("Common", {
 	key = "Common",
 	loc_txt = {},
