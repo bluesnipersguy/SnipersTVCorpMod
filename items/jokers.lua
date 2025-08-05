@@ -1631,7 +1631,7 @@ SMODS.Joker { -- Dr. Robotnik
     loc_txt = {
         name = "Dr. Robotnik",
         text = {
-            "Played {C:attention}face cards{} that are played",
+            "Played {C:attention}face cards{}",
             "are turned into {C:attention}Steel Cards{}",
             "{C:inactive}Snooping as usual I see!{}",
         }
