@@ -1700,7 +1700,7 @@ SMODS.Joker {
         ['name'] = 'Consumerism',
         ['text'] = {
             'When blind is selected',
-            'destroy a random {C:attention}Food{} Joker',
+            'destroy all {C:attention}Food{} Jokers',
             'gain {C:red}+5 Mult{} and {X:mult,C:white}X2{} Mult',
             'and gain {C:blue}+5 Chips{} and {X:chips,C:white}X2{} Chips',
             '{C:inactive} Current applying: {C:red}+#3# Mult{} and {X:mult,C:white}X#1#{} Mult{}.',
@@ -1742,13 +1742,11 @@ SMODS.Joker {
                 j_diet_cola = true,
                 j_popcorn = true,
                 j_ramen = true,
-                j_seltzer = true, -- typo fixed
+                j_seltzer = true,
             }
 
             for i = 1, #G.jokers.cards do
                 local joker = G.jokers.cards[i]
-                print(card.config.center_key)
-                -- print(inspectDepth(card))
                 local found_jokers = {}
                 if table_contains(food_jokers, joker.config.center_key) then
                     found_jokers[#found_jokers + 1] = joker
