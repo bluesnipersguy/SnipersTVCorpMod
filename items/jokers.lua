@@ -1695,14 +1695,7 @@ SMODS.Joker { -- Dr. Robotnik
 SMODS.Joker {
     name = "Consumerism",
     key = "consumerism",
-    config = {
-        extra = {
-            ConsumerismXmult = 1,
-            ConsumerismXchips = 1,
-            ConsumerismMult = 0,
-            ConsumerismChips = 0
-        }
-    },
+    config = { extra = { ConsumerismXmult = 1, ConsumerismXchips = 1, ConsumerismMult = 0, ConsumerismChips = 0 } },
     loc_txt = {
         ['name'] = 'Consumerism',
         ['text'] = {
@@ -1739,7 +1732,50 @@ SMODS.Joker {
     end,
 
     calculate = function(self, card, context)
-        if context.joker_main then
+        if context.setting_blind and not context.blueprint then
+            local food_jokers = {
+                j_gros_michel = true,
+                j_egg = true,
+                j_ice_cream = true,
+                j_cavendish = true,
+                j_turtle_bean = true,
+                j_diet_cola = true,
+                j_popcorn = true,
+                j_ramen = true,
+                j_seltzer = true, -- typo fixed
+            }
+
+            for i = 1, #G.jokers.cards do
+                local joker = G.jokers.cards[i]
+                print(card.config.center_key)
+                -- print(inspectDepth(card))
+                local found_jokers = {}
+                if table_contains(food_jokers, joker.config.center_key) then
+                    found_jokers[#found_jokers + 1] = joker
+                end
+                local found_joker = pseudorandom_element(found_jokers, 'sniperstvcorp_consumerism')
+                if found_joker then
+                    found_joker.getting_sliced = true
+
+                    G.E_MANAGER:add_event(Event({
+                        func = function()
+                            found_joker:start_dissolve({ G.C.RED }, nil, 1.6)
+                            return true
+                        end
+                    }))
+
+                    card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {
+                        message = "Eaten!", colour = G.C.RED
+                    })
+
+                    card.ability.extra.ConsumerismXmult = card.ability.extra.ConsumerismXmult + 2
+                    card.ability.extra.ConsumerismXchips = card.ability.extra.ConsumerismXchips + 2
+                    card.ability.extra.ConsumerismMult = card.ability.extra.ConsumerismMult + 5
+                    card.ability.extra.ConsumerismChips = card.ability.extra.ConsumerismChips + 5
+                end
+            end
+        end
+         if context.joker_main then
             return {
                 mult = card.ability.extra.ConsumerismMult,
                 xmult = card.ability.extra.ConsumerismXmult,
@@ -1747,46 +1783,6 @@ SMODS.Joker {
                 xchips = card.ability.extra.ConsumerismXchips
             }
         end
-        if context.setting_blind and not context.blueprint then
-                   local food_jokers = {
-                        j_gros_michel = true,
-                        j_egg = true,
-                        j_ice_cream = true,
-                        j_cavendish = true,
-                        j_turtle_bean = true,
-                        j_diet_cola = true,
-                        j_popcorn = true,
-                        j_ramen = true,
-                        j_seltzer = true,  -- typo fixed
-                    }
-
-                   for i = 1, #G.jokers.cards do
-                    local card = G.jokers.cards[i]
-                    print(card.config.key)
-                    print(inspectDepth(card.config))
-                    if table_contains(food_jokers, card.key) then
-                         card.getting_sliced = true
-
-                        G.E_MANAGER:add_event(Event({
-                            func = function()
-                                target_joker:start_dissolve({ G.C.RED }, nil, 1.6)
-                                return true
-                            end
-                        }))
-
-                        card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {
-                            message = "Eaten!", colour = G.C.RED
-                        })
-
-                        card.ability.extra.ConsumerismXmult = card.ability.extra.ConsumerismXmult + 2
-                        card.ability.extra.ConsumerismXchips = card.ability.extra.ConsumerismXchips + 2
-                        card.ability.extra.ConsumerismMult = card.ability.extra.ConsumerismMult + 5
-                        card.ability.extra.ConsumerismChips = card.ability.extra.ConsumerismChips + 5
-                    end
-
-                    return true
-                end
-             end
     end,
 
     credits = {
@@ -1795,113 +1791,6 @@ SMODS.Joker {
         idea = { "Shan" }
     }
 }
-
-SMODS.Joker { -- Shigesato Itoi
-    name = "Shigesato Itoi",
-    key = "shigesatoitoi",
-    loc_txt = {
-        name = "Shigesato Itoi",
-        text = {
-            "If played hand is {C:attention}Two Pair{}",
-            "and the only suit is Hearts,",
-            "{C:red}destroy{} a random {C:attention}Joker{} if any exist",
-            "and adds varying {X:red,C:white}XMult{}",
-            "{C:inactive}(Currently{} {X:red,C:white}X#1#{}{C:inactive}){}",
-            "{C:inactive}I'm betting Jimbo solos Giygas. - Tin{}",
-        }
-    },
-    pos = { x = 0, y = 0 },
-    cost = 10,
-    rarity = 3,
-    blueprint_compat = true,
-    eternal_compat = true,
-    unlocked = true,
-    discovered = true,
-    pools = { ['SnipersTVAdditions'] = true },
-    config = {
-        extra = {
-            xmult = "1",
-            type = "Two Pair",
-            odds = "15",
-            xmultadd1 = "1982",
-            xmultadd2 = "1994",
-            xmultadd3 = "2006",
-        }
-    },
-
-    loc_vars = function(self, info_queue, card)
-        return { vars = { card.ability.extra.xmult } }
-    end,
-
-    calculate = function(self, card, context)
-        if context.joker_main then
-            return {
-                Xmult = card.ability.extra.xmult
-            }
-        end
-        if context.cardarea == G.jokers and context.joker_main then
-            if (context.poker_hands[card.ability.extra.type] and (function()
-                    local allMatchSuit = true
-                    for i, c in ipairs(context.scoring_hand) do
-                        if not (c:is_suit("Hearts")) then
-                            allMatchSuit = false
-                            break
-                        end
-                    end
-
-                    return allMatchSuit and #context.scoring_hand > 0
-                end)()) then
-                if pseudorandom('shigesatomother3') < G.GAME.probabilities.normal / card.ability.extra.odds then
-                    card.ability.extra.xmult = card.ability.extra.xmult + card.ability.extra.xmultadd3
-                    return {
-                        message = localize('k_upgrade_ex'),
-                        colour = G.C.MULT
-                    }
-                end
-                if pseudorandom('shigesatoearthbound') < G.GAME.probabilities.normal * 10 / card.ability.extra.odds then
-                    card.ability.extra.xmult = card.ability.extra.xmult + card.ability.extra.xmultadd2
-                    return {
-                        message = localize('k_upgrade_ex'),
-                        colour = G.C.MULT
-                    }
-                end
-                if pseudorandom('shigesatomother1') < G.GAME.probabilities.normal * 5 / card.ability.extra.odds then
-                    card.ability.extra.xmult = card.ability.extra.xmult + card.ability.extra.xmultadd1
-                    return {
-                        message = localize('k_upgrade_ex'),
-                        colour = G.C.MULT
-                    }
-                end
-                local destructable_jokers = {}
-                for i, joker in ipairs(G.jokers.cards) do
-                    if joker ~= card and not joker.ability.eternal and not joker.getting_sliced then
-                        table.insert(destructable_jokers, joker)
-                    end
-                end
-                local target_joker = #destructable_jokers > 0 and
-                    pseudorandom_element(destructable_jokers, pseudoseed('destroy_joker')) or nil
-
-                if target_joker then
-                    target_joker.getting_sliced = true
-                    G.E_MANAGER:add_event(Event({
-                        func = function()
-                            target_joker:start_dissolve({ G.C.RED }, nil, 1.6)
-                            return true
-                        end
-                    }))
-                    card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil,
-                        { message = "Destroyed!", colour = G.C.RED })
-                end
-            end
-        end
-    end,
-    credits = {
-        art = { "N/A" },
-        code = { "Tinfoilbot65" },
-        idea = { "Masked Man" },
-    }
-}
-
 SMODS.Rarity:take_ownership("Common", {
 	key = "Common",
 	loc_txt = {},
