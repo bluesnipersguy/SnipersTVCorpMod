@@ -17,8 +17,8 @@ SMODS.Back({
 		name = "Forest Deck",
 		text = {
 			"Start with 2 Jokers,",
-			"a {C:inactive}Negative,{} {C:legendary}Legendary{} {C:green}Forest{} Joker",
-			"and a {C:red}Rare{} {C:blue}Blueprint{} Joker",
+			"a {C:inactive}Negative,{} {C:green}Forest{} Joker",
+			"and a {C:blue}Blueprint{} Joker",
 			"{C:attention}+1{} Joker Slot",
 		},
 	},
@@ -76,8 +76,8 @@ SMODS.Back({
 		name = "Gentleman Deck",
 		text = {
 			"Start with 2 Jokers,",
-			"a {C:legendary}Legendary{} {C:red}Harold{} Joker,",
-			"a {C:red}Rare DNA{} Joker,",
+			"a {C:red}Harold{} Joker,",
+			"a  {C:red}DNA{} Joker,",
 			"and 2 {C:attention}copies{} of Death.",
 		},
 	},
@@ -117,41 +117,6 @@ SMODS.Back({
 	},
 })
 SMODS.Back({
-	key = "EggDeck",
-	loc_txt = {
-		name = "RNGJesus Deck",
-		text = {
-			"Start with a",
-			"{C:rare} Rare{} {C:red}Egg (illudethis){} Joker",
-		},
-	},
-	pos = { x = 0, y = 0 },
-	order = 1,
-	unlocked = true,
-
-	apply = function(self)
-		G.E_MANAGER:add_event(Event({
-			func = function()
-				if G.jokers then
-					local card = SMODS.create_card({
-						set = "Joker",
-						key = "j_SnipersTV_Egg",
-						area = G.jokers,
-					})
-					card:add_to_deck()
-					G.jokers:emplace(card)
-					return true
-				end
-			end,
-		}))
-	end,
-	credits = {
-		art = { "bluesnipersguy" },
-		code = { "bluesnipersguy" },
-		idea = { "bluesnipersguy" },
-	},
-})
-SMODS.Back({
 	key = "HoarderDeck",
 	loc_txt = {
 		name = "Hoarders Deck",
@@ -161,7 +126,7 @@ SMODS.Back({
 			"{C:blue}+1{} Hand, {C:red}+1{} Discard, {C:attention}+1{} Joker Slot.",
 			"Start with {C:attention}$10{}.",
 			"{C:attention}$2{} dollars per {C:blue}hand{} left.",
-			"{C:attention}$1{} per {C:blue}discard{} left.",
+			"{C:attention}$1{} per {C:red}discard{} left.",
 		},
 	},
 
@@ -221,7 +186,7 @@ SMODS.Back({
         name = "Oyasumi Deck",
         text = {
             "Start with {C:attention}MARI\'s Picnic{}",
-	    "and a {C:inactive}Negative{} {C:attention}OMORI{}",
+	    	"and a {C:inactive}Negative{} {C:attention}OMORI{}",
             "You only have Spades in your deck",
         },
     },
@@ -276,7 +241,7 @@ SMODS.Back({
 		name = "Drunken Wizard's Deck",
 		text = {
 			"All playing cards have a",
-			"{C:attention}Random{} Enchantment",
+			"{C:attention}Random{} Enhancement",
 			"{C:inactive}drunken wizardry - blue{}"
 		},
 	},

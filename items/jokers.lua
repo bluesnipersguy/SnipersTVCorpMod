@@ -1,3 +1,8 @@
+function table_contains(table, value)
+  if table[value] ~= nil then return true end
+  return false
+end
+
 SMODS.Atlas{
     key = 'ForestJoker',
     path = 'ForestJoker.png',
@@ -397,8 +402,12 @@ SMODS.Joker{
     key = 'Landscape',
     loc_txt= {
         name = 'Landscape',
-        text = { 'For each scored {C:attention}face{} card, gain {X:mult,C:white}X0.50{} Mult{}, if discarded, gain {C:blue}20 Chips{}.',
-                 'For each scored non-{C:attention}face{} card, lose {X:mult,C:white}X0.50{} Mult{}, if discarded, lose {C:blue}20 Chips{}.',
+        text = { 'For each scored {C:attention}face{} card,',
+                'gain {X:mult,C:white}X0.50{} Mult{}',
+                'if discarded, gain {C:blue}20 Chips{}.',
+                'For each scored non-{C:attention}face{} card,',
+                'lose {X:mult,C:white}X0.50{} Mult{},',
+                'if discarded, lose {C:blue}20 Chips{}.',
                 '{C:inactive}Currently applying: {X:mult,C:white}X#1#{} Mult{}.',
                 '{C:inactive}Currently adding: {C:blue}+#2# Chips{}.',
                 '{C:inactive}A beautiful landscape filled with 1080p glory. - blue'
@@ -853,11 +862,11 @@ SMODS.Joker{ --Gamblecore
         ['name'] = 'Gamblecore',
         ['text'] = {
             [1] = 'When blind is selected',
-			[2] = 'you will gain a random {C:attention}Joker{} of any rarity (must have room)',
-            [3] = '25/50 chance for a {C:blue}Common{}',
-            [4] = '14/50 chance for a {C:green}Uncommon{}',
-            [5] = '10/50 chance for a {C:red}Rare{}',
-            [6] = '1/50 chance for a {C:tarot}Legendary{}',
+			[2] = 'Create a {C:attention}Joker{} of any rarity (must have room)',
+            [3] = '{C:green}1/2{} chance for a {C:blue}Common{}',
+            [4] = '{C:green}7/25{} chance for a {C:green}Uncommon{}',
+            [5] = '{C:green}1/5{} chance for a {C:red}Rare{}',
+            [6] = '{C:green}1/50{} chance for a {C:tarot}Legendary{}',
             [7] = '{C:inactive}Let\'s go gambling!{}'
         }
     },
@@ -1683,7 +1692,109 @@ SMODS.Joker { -- Dr. Robotnik
         idea = { "Tinfoilbot65" },
     }
 }
+SMODS.Joker {
+    name = "Consumerism",
+    key = "consumerism",
+    config = {
+        extra = {
+            ConsumerismXmult = 1,
+            ConsumerismXchips = 1,
+            ConsumerismMult = 0,
+            ConsumerismChips = 0
+        }
+    },
+    loc_txt = {
+        ['name'] = 'Consumerism',
+        ['text'] = {
+            'When blind is selected',
+            'destroy a random {C:attention}Food{} Joker',
+            'gain {C:red}+5 Mult{} and {X:mult,C:white}X2{} Mult',
+            'and gain {C:blue}+5 Chips{} and {X:chips,C:white}X2{} Chips',
+            '{C:inactive} Current applying: {C:red}+#3# Mult{} and {X:mult,C:white}X#1#{} Mult{}.',
+            '{C:inactive} Current applying: {C:blue}+#4# Chips{} and {X:chips,C:white}X#2#{} Chips{}.',
+            '{C:inactive}weight gain is bad for you! - blue{}'
+        }
+    },
+    pools = { ['SnipersTVAdditions'] = true },
+    pos = {
+        x = 0,
+        y = 0
+    },
+    cost = 10,
+    rarity = 3,
+    blueprint_compat = false,
+    eternal_compat = true,
+    unlocked = true,
+    discovered = true,
 
+    loc_vars = function(self, info_queue, card)
+        return {
+            vars = {
+                card.ability.extra.ConsumerismXmult,
+                card.ability.extra.ConsumerismXchips,
+                card.ability.extra.ConsumerismChips,
+                card.ability.extra.ConsumerismMult
+            }
+        }
+    end,
+
+    calculate = function(self, card, context)
+        if context.joker_main then
+            return {
+                mult = card.ability.extra.ConsumerismMult,
+                xmult = card.ability.extra.ConsumerismXmult,
+                chips = card.ability.extra.ConsumerismChips,
+                xchips = card.ability.extra.ConsumerismXchips
+            }
+        end
+        if context.setting_blind and not context.blueprint then
+                   local food_jokers = {
+                        j_gros_michel = true,
+                        j_egg = true,
+                        j_ice_cream = true,
+                        j_cavendish = true,
+                        j_turtle_bean = true,
+                        j_diet_cola = true,
+                        j_popcorn = true,
+                        j_ramen = true,
+                        j_seltzer = true,  -- typo fixed
+                    }
+
+                   for i = 1, #G.jokers.cards do
+                    local card = G.jokers.cards[i]
+                    print(card.config.key)
+                    print(inspectDepth(card.config))
+                    if table_contains(food_jokers, card.key) then
+                         card.getting_sliced = true
+
+                        G.E_MANAGER:add_event(Event({
+                            func = function()
+                                target_joker:start_dissolve({ G.C.RED }, nil, 1.6)
+                                return true
+                            end
+                        }))
+
+                        card_eval_status_text(context.blueprint_card or card, 'extra', nil, nil, nil, {
+                            message = "Eaten!", colour = G.C.RED
+                        })
+
+                        card.ability.extra.ConsumerismXmult = card.ability.extra.ConsumerismXmult + 2
+                        card.ability.extra.ConsumerismXchips = card.ability.extra.ConsumerismXchips + 2
+                        card.ability.extra.ConsumerismMult = card.ability.extra.ConsumerismMult + 5
+                        card.ability.extra.ConsumerismChips = card.ability.extra.ConsumerismChips + 5
+                    end
+
+                    return true
+                end
+             end
+    end,
+
+    credits = {
+        art = { "N/A" },
+        code = { "bluesnipersguy" },
+        idea = { "Shan" }
+    }
+}
 SMODS.Rarity:take_ownership("Common", {
 	key = "Common",
 	loc_txt = {},
@@ -1782,7 +1893,8 @@ Starts out at 1X and 2 dollars.
 Obscures all vital information until sold.
 ]]
 --[[
-Shigesato Itoi Joker: 
+Shigesato Itoi Joker: Being Worked on!
+Rare
 If played hand contains a two pair that has ONLY hearts, 
 It destroys all jokers but has a 
 1/10 to add X1982 mult, 
@@ -1791,7 +1903,8 @@ It destroys all jokers but has a
 (Credit to Masked Man)
 ]]
 --[[
-fat ahh joker
+Consumerism Being Worken on!
+Rare
 if there's a food joker in your joker slots
 destroy it
 gain 
