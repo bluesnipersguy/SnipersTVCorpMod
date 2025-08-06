@@ -1742,7 +1742,8 @@ SMODS.Joker {
                 j_diet_cola = true,
                 j_popcorn = true,
                 j_ramen = true,
-                j_seltzer = true,
+                j_selzer = true,
+                j_SnipersTV_marispicnic = true,
             }
 
             for i = 1, #G.jokers.cards do
