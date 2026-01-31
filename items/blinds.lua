@@ -168,3 +168,77 @@ SMODS.Blind {
         end
     end
 }
+SMODS.Blind {
+    key = "Besthesda",
+    loc_txt  =  {
+        name = "Besthesda",
+        text = {
+            "it just works",
+            "Lose $2 per card played",
+            "Below $35 all cards are debuffed."
+        }
+    },
+    dollars = 5,
+    mult = 2,
+    pos = { x = 0, y = 22 },
+    boss = { showdown = true },
+    boss_colour = HEX("000000"),
+    calculate = function(self, blind, context)
+        if not blind.disabled then
+            if context.press_play then
+                G.E_MANAGER:add_event(Event({
+                    trigger = 'after',
+                    delay = 0.2,
+                    func = function()
+                        for i = 1, #G.play.cards do
+                            G.E_MANAGER:add_event(Event({
+                                func = function()
+                                    G.play.cards[i]:juice_up()
+                                    return true
+                                end,
+                            }))
+                            ease_dollars(-2)
+                            delay(0.23)
+                        end
+                        return true
+                    end
+                }))
+                blind.triggered = true
+                G.E_MANAGER:add_event(Event({
+                    trigger = 'immediate',
+                    func = (function()
+                        SMODS.juice_up_blind()
+                        G.E_MANAGER:add_event(Event({
+                            trigger = 'after',
+                            delay = 0.06 * G.SETTINGS.GAMESPEED,
+                            blockable = false,
+                            blocking = false,
+                            func = function()
+                                play_sound('tarot2', 0.76, 0.4)
+                                return true
+                            end
+                        }))
+                        play_sound('tarot2', 1, 0.4)
+                        return true
+                    end)
+                }))
+                delay(0.4)
+            end
+            if context.debuff_card and context.debuff_card.playing_card and G.GAME.dollars < 35 then
+                return { debuff = true }
+            end
+
+            if context.after then
+                G.E_MANAGER:add_event(Event({
+                    func = function()
+                        for k,v in pairs(G.playing_cards) do 
+                            SMODS.recalc_debuff(v)
+                        end
+                        delay(0.23)
+                        return true
+                    end
+                }))
+            end
+        end
+    end
+}
