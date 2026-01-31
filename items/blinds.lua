@@ -283,19 +283,19 @@ SMODS.Blind {
     },
     dollars = 5,
     mult = 2,
-    boss_colour = HEX("ffffff"),
+    boss_colour = HEX("404040"),
     pos = { x = 0, y = 26 },
     boss = { showdown = true },
     calculate = function(self, card, context)
         if context.debuff_card then local id = context.debuff_card:get_id() 
-            if id and id <= 13 and id >= 0 then 
+            if id and id <= 14 and id >= 0 then 
                 return { debuff = true } 
             end 
         end
     end,
     disable = function(self)
         if context.debuff_card then local id = context.debuff_card:get_id() 
-            if id and id <= 13 and id >= 0 then 
+            if id and id <= 14 and id >= 0 then 
                 return { debuff = false } 
             end 
         end
