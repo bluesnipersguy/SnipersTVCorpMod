@@ -169,12 +169,13 @@ SMODS.Blind {
     end
 }
 SMODS.Blind {
-    key = "Besthesda",
+    key = "Bethesda",
     loc_txt  =  {
-        name = "Besthesda",
+        name = "Bethesda",
         text = {
-            "it just works",
-            "Lose $2 per card played",
+            "todd howard",
+            "it just works"
+            "Lose $5 per card played",
             "Below $35 all cards are debuffed."
         }
     },
@@ -197,7 +198,7 @@ SMODS.Blind {
                                     return true
                                 end,
                             }))
-                            ease_dollars(-2)
+                            ease_dollars(-5)
                             delay(0.23)
                         end
                         return true
@@ -234,7 +235,6 @@ SMODS.Blind {
                         for k,v in pairs(G.playing_cards) do 
                             SMODS.recalc_debuff(v)
                         end
-                        delay(0.23)
                         return true
                     end
                 }))
