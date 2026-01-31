@@ -283,7 +283,7 @@ SMODS.Blind {
     },
     dollars = 5,
     mult = 2,
-    boss_colour = HEX("404040"),
+    boss_colour = HEX("808080"),
     pos = { x = 0, y = 26 },
     boss = { showdown = true },
     calculate = function(self, card, context)
