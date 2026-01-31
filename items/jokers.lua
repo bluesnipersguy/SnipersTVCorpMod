@@ -334,7 +334,7 @@ SMODS.Joker{
 	end,
 	calculate = function(self, card, context)
 		if context.reroll_shop then
-			card.ability.extra.BuffedOdds = math.min(0.5, card.ability.extra.BuffedOdds + 0.01)
+			card.ability.extra.BuffedOdds = math.min(0.5, card.ability.extra.BuffedOdds + 0.02)
 			return {
 				message = "Buffed!",
 			}

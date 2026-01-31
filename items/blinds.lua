@@ -95,7 +95,7 @@ SMODS.Blind {
     end,
     disable = function(self)
         if context.debuff_card then local id = context.debuff_card:get_id() 
-            if id and id <= 10 and id >= 0 and id % 2 == 1 then 
+            if id and id <= 10 and id >= 0 and id % 2 == 0 then 
                 return { debuff = false } 
             end 
         end
@@ -111,7 +111,7 @@ key = "EXTRATHICC",
         }
     },
     dollars = 5,
-    mult = 16,
+    mult = 8,
     pos = { x = 0, y = 9 },
     boss = { min = 2 },
     boss_colour = HEX("8a71e1"),
@@ -130,7 +130,7 @@ key = "EXTRATHICC2",
         }
     },
     dollars = 5,
-    mult = 32,
+    mult = 64,
     boss = { showdown = true },
     pos = { x = 0, y = 9 },
     boss_colour = HEX("8a71e1"),
@@ -174,13 +174,12 @@ SMODS.Blind {
         name = "Bethesda",
         text = {
             "todd howard",
-            "it just works",
             "Lose $5 per card played",
-            "Below $35 all cards are debuffed."
+            "When In Debt, all cards are debuffed."
         }
     },
     dollars = 5,
-    mult = 2,
+    mult = 4,
     pos = { x = 0, y = 22 },
     boss = { showdown = true },
     boss_colour = HEX("000000"),
@@ -239,6 +238,66 @@ SMODS.Blind {
                     end
                 }))
             end
+        end
+    end
+}
+SMODS.Blind {
+    key = "DT",
+    loc_txt  =  {
+        name = "Double Trouble",
+        text = {
+            "prepare for double -todd",
+            "make it trouble -steven",
+            "All number cards are debuffed."
+        }
+    },
+    dollars = 5,
+    mult = 4,
+    boss_colour = HEX("6c00ff"),
+    pos = { x = 0, y = 26 },
+    boss = { showdown = true },
+    calculate = function(self, card, context)
+        if context.debuff_card then local id = context.debuff_card:get_id() 
+            if id and id <= 10 and id >= 0 then 
+                return { debuff = true } 
+            end 
+        end
+    end,
+    disable = function(self)
+        if context.debuff_card then local id = context.debuff_card:get_id() 
+            if id and id <= 10 and id >= 0 then 
+                return { debuff = false } 
+            end 
+        end
+    end
+}
+SMODS.Blind {
+    key = "TT",
+    loc_txt  =  {
+        name = "Triple Trouble",
+        text = {
+            "cards? in this economy?",
+            "i can't even afford sliced bread",
+            "All playing cards are debuffed."
+        }
+    },
+    dollars = 5,
+    mult = 2,
+    boss_colour = HEX("ffffff"),
+    pos = { x = 0, y = 26 },
+    boss = { showdown = true },
+    calculate = function(self, card, context)
+        if context.debuff_card then local id = context.debuff_card:get_id() 
+            if id and id <= 13 and id >= 0 then 
+                return { debuff = true } 
+            end 
+        end
+    end,
+    disable = function(self)
+        if context.debuff_card then local id = context.debuff_card:get_id() 
+            if id and id <= 13 and id >= 0 then 
+                return { debuff = false } 
+            end 
         end
     end
 }
