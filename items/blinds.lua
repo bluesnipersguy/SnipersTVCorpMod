@@ -174,7 +174,7 @@ SMODS.Blind {
         name = "Bethesda",
         text = {
             "todd howard",
-            "it just works"
+            "it just works",
             "Lose $5 per card played",
             "Below $35 all cards are debuffed."
         }
