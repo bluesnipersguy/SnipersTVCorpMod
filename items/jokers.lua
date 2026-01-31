@@ -81,7 +81,7 @@ SMODS.Joker{
                 '{C:inactive} My cute boyfriend! - bluesnipersguy{}',
             }
 	},
-    pools = { ['SnipersTVAdditions'] = true },
+    pools = { ['SnipersTVAdditions'] = false },
     pos = {x=0, y= 0},
 	soul_pos = { x = 0, y = 1 },
 	cost = 30,
@@ -102,7 +102,7 @@ SMODS.Joker{
 		unlock_card(self)
 	end,
 	calculate = function(self, card, context)
-		if context.retrigger_joker_check then
+		if context.retrigger_joker_check and not context.retrigger_joker and context.other_card and context.other_card then
 			return {
 				repetitions = #G.jokers.cards,
                 message = "There ya go! :3c"
@@ -198,7 +198,7 @@ SMODS.Joker{
             '{C:inactive}Always bet on Hakari. - blue',
         }
 	},
-    pools = { ['SnipersTVAdditions'] = true },
+    pools = { ['SnipersTVAdditions'] = false },
     pos = {x=0, y= 0},
 	soul_pos = { x = 0, y = 1 },
 	cost = 35,
@@ -252,7 +252,7 @@ SMODS.Joker{
                 '{C:inactive}A true gentleman. - blue',
             }
 	},
-    pools = { ['SnipersTVAdditions'] = true },
+    pools = { ['SnipersTVAdditions'] = false },
     pos = {x=0, y= 0},
 	soul_pos = { x = 0, y = 1 },
     config = { extra = { DarkXMult = 1.5, } },
@@ -546,7 +546,7 @@ SMODS.Joker {
             '{C:inactive}IS THAT {C:legendary}SOURCHAOSCANDY{}{}{C:inactive}FROM THE HIT SERVICE TWITCH?{} - blue{}'
         }
 	},
-	pools = { ["SnipersTVAdditions"] = true },
+	pools = { ["SnipersTVAdditions"] = false },
 	pos = { x = 0, y = 0 },
 	loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.SugarXMult, } }
@@ -612,7 +612,7 @@ SMODS.Joker {
             "{C:inactive}Notably combos well with Sugar... Wonder why... - blue{}"
         }
 	},
-	pools = { ["SnipersTVAdditions"] = true },
+	pools = { ["SnipersTVAdditions"] = false },
 	pos = { x = 0, y = 0 },
 	loc_vars = function(self, info_queue, card)
         return { vars = { card.ability.extra.gammaRepetitions, } }
@@ -1993,26 +1993,4 @@ Rarity: Rare
 For each selected blind, gain X0.5mult and increse gain by 2 dollars.
 Starts out at 1X and 2 dollars.
 Obscures all vital information until sold.
-]]
---[[
-Shigesato Itoi Joker: Being Worked on!
-Rare
-If played hand contains a two pair that has ONLY hearts, 
-It destroys all jokers but has a 
-1/10 to add X1982 mult, 
-1/5 chance to Add x1994 Mult,
-1/15 chance to add X2006 mult
-(Credit to Masked Man)
-]]
---[[
-Consumerism Being Worken on!
-Rare
-if there's a food joker in your joker slots
-destroy it
-gain 
-2x mult 
-5 mult 
-2x chips
-5 chips
-(Credit to Shan)
 ]]

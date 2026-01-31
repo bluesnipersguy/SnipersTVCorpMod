@@ -6,6 +6,7 @@
 --- AUTHOR: bluesnipersguy, colonthreeing, Egg (illudethis)
 ----------------------------------------------------------
 ----------- MOD CODE -------------------------------------
+SnipersTV = SMODS.current_mod
 if not SnipersTV then
 	SnipersTV = {}
 end
@@ -21,6 +22,14 @@ SMODS.current_mod.optional_features = {
 
 local files = NFS.getDirectoryItems(mod_path .. "items")
 
+SMODS.ObjectType({
+	key = 'SnipersTVAdditions',
+	default = "j_reserved_parking",
+	cards = {
+		["j_SnipersTV_marispicnic"] = true,
+	},
+})
+
 for _, file in ipairs(files) do
 	print("SnipersTV Loading lua files..." .. file)
 	local f, err = SMODS.load_file("items/" .. file)
@@ -31,12 +40,3 @@ for _, file in ipairs(files) do
 		f()
 	end
 end
-
-SMODS.ObjectType({
-	key = 'SnipersTVAddition',
-	default = "j_reserved_parking",
-	cards = {},
-	inject = function(self)
-		SMODS.ObjectType.inject(self)
-	end,
-})
