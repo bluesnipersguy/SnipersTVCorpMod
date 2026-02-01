@@ -46,6 +46,12 @@ SMODS.Atlas {
     px = 71,
     py = 95
 }
+SMODS.Atlas {
+    key = 'BrontoBurtJoker',
+    path = 'BrontoBurtJoker.png',
+    px = 71,
+    py = 95
+}
 SMODS.Sound{
 	key = 'youwontlivetoseethenextday',
 	path = 'youwontlivetoseethenextday.ogg',
@@ -69,6 +75,10 @@ SMODS.Sound {
 SMODS.Sound {
     key = 'snooping',
     path = 'snooping.ogg',
+}
+SMODS.Sound {
+    key = 'brontoburt',
+    path = 'brontoburt.ogg',
 }
 
 SMODS.Joker{
@@ -1894,6 +1904,60 @@ SMODS.Joker { -- Shigesato Itoi
         art = { "N/A" },
         code = { "Tinfoilbot65" },
         idea = { "Masked Man" },
+    }
+}
+
+SMODS.Joker { -- Bronto Burt
+    name = "Bronto Burt",
+    key = "brontoburt",
+    loc_txt = {
+        name = "Bronto Burt",
+        text = {
+            "If hand contains a {C:attention}Straight{},",
+            "every card scores twice",
+            "{C:inactive}'Bronto Burt you bully,{}",
+            "{C:inactive}the pleasure will be all mine.' - Kirby (probably){}",
+        }
+    },
+    pools = { ['SnipersTVAdditions'] = true },
+    atlas = 'BrontoBurtJoker',
+    pos = { x = 0, y = 0 },
+    rarity = 2,
+    cost = 5,
+    unlocked = true,
+    discovered = true,
+    blueprint_compat = false,
+    eternal_compat = true,
+    perishable_compat = true,
+     config = { extra = { repetitions = 1 } },
+    loc_vars = function(self, info_queue, card)
+        return { vars = { card.ability.extra.repetitions } }
+    end,
+    calculate = function(self, card, context)
+        if context.repetition and context.cardarea == G.play and next(context.poker_hands['Straight']) then
+            return {
+                repetitions = card.ability.extra.repetitions
+            }
+        end
+    end,
+    locked_loc_vars = function(self, info_queue, card)
+        return { vars = { localize('Straight', 'poker_hands') } }
+    end,
+    check_for_unlock = function(self, args)
+        if args.type == 'round_win' then
+            return G.GAME.last_hand_played == 'Straight' and G.GAME.blind.boss
+        end
+        return false
+    end,
+    add_to_deck = function(self, card, from_debuff)
+        if not from_debuff then
+            play_sound('SnipersTV_brontoburt')
+        end
+    end,
+    credits = {
+        art = { "Tinfoilbot65" },
+        code = { "Tinfoilbot65" },
+        idea = { "Tinfoilbot65" },
     }
 }
 
